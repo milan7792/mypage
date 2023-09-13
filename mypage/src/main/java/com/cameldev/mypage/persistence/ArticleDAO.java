@@ -2,6 +2,7 @@ package com.cameldev.mypage.persistence;
 
 import java.util.List;
 
+import com.cameldev.mypage.commons.paging.Criteria;
 import com.cameldev.mypage.domain.ArticleVO;
 
 public interface ArticleDAO {
@@ -15,5 +16,9 @@ public interface ArticleDAO {
 	void delete(Integer article_no) throws Exception;
 
 	List<ArticleVO> listAll() throws Exception;
-
+	
+	List<ArticleVO> listPaging(int page) throws Exception;
+	
+	List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
+	
 }

@@ -142,7 +142,6 @@
 					<!-- /.navbar -->
 
 					<!-- Main Sidebar Container -->
-					<%@ include file="../include/left_column.jsp" %>
 						<aside class="main-sidebar sidebar-dark-primary elevation-4">
 							<!-- Brand Logo -->
 							<a href="index3.html" class="brand-link"> <img src="dist/img/AdminLTELogo.png"
@@ -198,7 +197,7 @@
 							</div>
 							<!-- /.sidebar -->
 						</aside>
-
+						<%@ include file="../include/left_column.jsp"%>
 						<!-- Content Wrapper. Contains page content -->
 						<div class="content-wrapper">
 							<!-- Content Header (Page header) -->

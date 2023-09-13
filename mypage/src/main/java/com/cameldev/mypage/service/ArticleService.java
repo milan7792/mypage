@@ -2,6 +2,7 @@ package com.cameldev.mypage.service;
 
 import java.util.List;
 
+import com.cameldev.mypage.commons.paging.Criteria;
 import com.cameldev.mypage.domain.ArticleVO;
 
 public interface ArticleService {
@@ -15,5 +16,6 @@ public interface ArticleService {
 	void delete(Integer article_no) throws Exception;
 
 	List<ArticleVO> listAll() throws Exception;
-
+	
+	List<ArticleVO> listCriteria(Criteria criteria) throws Exception;
 }

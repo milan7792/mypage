@@ -178,7 +178,7 @@
 							class="nav-link active"> <i
 								class="nav-icon fas fa-tachometer-alt"></i>
 								<p>
-									Write Page <i class="right fas fa-angle-left"></i>
+									Starter Pages <i class="right fas fa-angle-left"></i>
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
@@ -211,7 +211,7 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0 text-dark">Write Page</h1>
+							<h1 class="m-0 text-dark">Starter Page</h1>
 						</div>
 						<!-- /.col -->
 						<div class="col-sm-6">
@@ -232,46 +232,51 @@
 			<div class="content">
 				<div class="container-fluid">
 					<div class="col-lg-12">
-						<form role="form" id="writeForm" method="post"
-							action="${path}/article/write">
-							<div class="card">
-								<div class="card-header with-border">
-									<h3 class="card-title">게시글 작성</h3>
-								</div>
-								<div class="card-body">
-									<div class="form-group">
-										<label for="title">제목</label> <input class="form-control"
-											id="title" name="title" placeholder="제목을 입력해주세요">
-									</div>
-									<div class="form-group">
-										<label for="content">내용</label>
-										<textarea class="form-control" id="content" name="content"
-											rows="30" placeholder="내용을 입력해주세요" style="resize: none;"></textarea>
-									</div>
-									<div class="form-group">
-										<label for="writer">작성자</label> <input class="form-control"
-											id="writer" name="writer">
-									</div>
-								</div>
-								<div class="card-footer">
-									<button type="button" class="btn btn-primary">
-										<i class="fa fa-list"></i> 목록
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">게시글 목록</h3>
+							</div>
+							<div class="card-body">
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<th style="width: 30px">#</th>
+											<th>제목</th>
+											<th style="width: 100px">작성자</th>
+											<th style="width: 150px">작성시간</th>
+											<th style="width: 60px">조회</th>
+										</tr>
+										<c:forEach items="${articles}" var="article">
+											<tr>
+												<td>${article.article_no}</td>
+												<td><a
+													href="${path}/article/read?article_no=${article.article_no}">${article.title}</a></td>
+												<td>${article.writer}</td>
+												<td><fmt:formatDate value="${article.regDate}"
+														pattern="yyyy-MM-dd a HH:mm" /></td>
+												<td><span class="badge bg-red">${article.viewCnt}</span></td>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+							<div class="card-footer">
+								<div class="float-right">
+									<button type="button" class="btn btn-success btn-flat"
+										id="writeBtn">
+										<i class="fa fa-pencil"></i> 글쓰기
 									</button>
-									<div class="float-right">
-										<button type="reset" class="btn btn-warning">
-											<i class="fa fa-reply"></i> 초기화
-										</button>
-										<button type="submit" class="btn btn-success">
-											<i class="fa fa-save"></i> 저장
-										</button>
-									</div>
 								</div>
 							</div>
-						</form>
+						</div>
 					</div>
+					<!-- /.row -->
 				</div>
+				<!-- /.container-fluid -->
 			</div>
+			<!-- /.content -->
 		</div>
+		<!-- /.content-wrapper -->
 
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">

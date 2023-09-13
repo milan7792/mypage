@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cameldev.mypage.commons.paging.Criteria;
 import com.cameldev.mypage.domain.ArticleVO;
 import com.cameldev.mypage.service.ArticleService;
 
@@ -100,5 +101,12 @@ public class ArticleController {
 		redirectAttributes.addFlashAttribute("msg", "delSuccess");
 
 		return "redirect:/article/list";
+	}
+	
+	@RequestMapping(value = "/listCriteria", method = RequestMethod.GET)
+	public String listCriteria(Model model, Criteria criteria) throws Exception {
+	    logger.info("listCriteria ...");
+	    model.addAttribute("articles", articleService.listCriteria(criteria));
+	    return "/article/list_criteria";
 	}
 }
