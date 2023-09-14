@@ -1,3 +1,8 @@
+package com.cameldev.mypage.commons.paging;
+
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class PageMaker {
 
     private int totalCount;
@@ -85,6 +90,15 @@ public class PageMaker {
 	public Criteria getCriteria() {
 		return criteria;
 	}
+	
+	public String makeQuery(int page) {
+	    UriComponents uriComponents = UriComponentsBuilder.newInstance()
+	            .queryParam("page", page)
+	            .queryParam("perPageNum", criteria.getPerPageNum())
+	            .build();
+
+	    return uriComponents.toUriString();
+	}
     
-    // Getter Setter는 따로 추가해주시길 바랍니다. 포스팅할 때 코드가 너무 길어져요
+    // Getter Setter 추가
 }
