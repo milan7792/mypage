@@ -2,7 +2,7 @@
 <html lang="ko">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../include/head.jsp"%>
+<%@ include file="../../include/head.jsp"%>
 
 <head>
 <meta charset="UTF-8">
@@ -25,7 +25,7 @@
 	<div class="wrapper">
 
 		<!-- Navbar -->
-		<%@ include file="../include/main_header.jsp"%>
+		<%@ include file="../../include/main_header.jsp"%>
 		<nav
 			class="main-header navbar navbar-expand navbar-white navbar-light">
 			<!-- Left navbar links -->
@@ -203,7 +203,7 @@
 			</div>
 			<!-- /.sidebar -->
 		</aside>
-		<%@ include file="../include/left_column.jsp"%>
+		<%@ include file="../../include/left_column.jsp"%>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -250,7 +250,7 @@
 											<tr>
 												<td>${article.article_no}</td>
 												<td><a
-													href="${path}/article/read?article_no=${article.article_no}">${article.title}</a></td>
+													href="${path}/article/paging/read${pageMaker.makeQuery(pageMaker.criteria.page)}&article_no=${article.article_no}">${article.title}</a></td>
 												<td>${article.writer}</td>
 												<td><fmt:formatDate value="${article.regDate}"
 														pattern="yyyy-MM-dd a HH:mm" /></td>
@@ -260,6 +260,30 @@
 									</tbody>
 								</table>
 							</div>
+
+							<div class="card-footer">
+								<nav aria-label="Contacts Page Navigation">
+									<ul class="pagination justify-content-center m-0">
+										<c:if test="${pageMaker.prev}">
+											<li class="page-item"><a class="page-link"
+												href="${path}/article/paging/list${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
+										</c:if>
+										<c:forEach begin="${pageMaker.startPage}"
+											end="${pageMaker.endPage}" var="idx">
+											<li class="page-item"
+												<c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
+												<a class="page-link"
+												href="${path}/article/paing/list${pageMaker.makeQuery(idx)}">${idx}</a>
+											</li>
+										</c:forEach>
+										<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+											<li class="page-item"><a class="page-link"
+												href="${path}/article/paging/list?${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+										</c:if>
+									</ul>
+								</nav>
+							</div>
+
 							<div class="card-footer">
 								<div class="float-right">
 									<button type="button" class="btn btn-success btn-flat"
@@ -285,7 +309,7 @@
 		<!-- /.control-sidebar -->
 
 		<!-- Main Footer -->
-		<%@ include file="../include/main_footer.jsp"%>
+		<%@ include file="../../include/main_footer.jsp"%>
 		<footer class="main-footer">
 			<!-- To the right -->
 			<div class="float-right d-none d-sm-inline">Anything you want</div>
@@ -298,7 +322,7 @@
 	<!-- ./wrapper -->
 
 	<!-- REQUIRED SCRIPTS -->
-	<%@ include file="../include/plugin_js.jsp"%>
+	<%@ include file="../../include/plugin_js.jsp"%>
 
 	<!-- jQuery -->
 	<script src="mypage/src/main/webapp/resources/plugins/jquery/jquery.min.js"></script>

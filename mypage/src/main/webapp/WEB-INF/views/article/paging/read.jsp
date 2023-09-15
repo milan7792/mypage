@@ -2,7 +2,7 @@
 <html lang="ko">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../include/head.jsp"%>
+<%@ include file="../../include/head.jsp"%>
 
 <head>
 <meta charset="UTF-8">
@@ -12,20 +12,23 @@
 <title>BU | Starter</title>
 
 <!-- Font Awesome Icons -->
-<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="dist/css/adminlte.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/dist/css/adminlte.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
 	rel="stylesheet">
+
 </head>
 
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
 
 		<!-- Navbar -->
-		<%@ include file="../include/main_header.jsp"%>
+		<%@ include file="../../include/main_header.jsp"%>
 		<nav
 			class="main-header navbar navbar-expand navbar-white navbar-light">
 			<!-- Left navbar links -->
@@ -178,7 +181,7 @@
 							class="nav-link active"> <i
 								class="nav-icon fas fa-tachometer-alt"></i>
 								<p>
-									List Page <i class="right fas fa-angle-left"></i>
+									Starter Pages <i class="right fas fa-angle-left"></i>
 								</p>
 						</a>
 							<ul class="nav nav-treeview">
@@ -203,7 +206,7 @@
 			</div>
 			<!-- /.sidebar -->
 		</aside>
-		<%@ include file="../include/left_column.jsp"%>
+		<%@ include file="../../include/left_column.jsp"%>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -211,7 +214,7 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0 text-dark">List Page</h1>
+							<h1 class="m-0 text-dark">Starter Page</h1>
 						</div>
 						<!-- /.col -->
 						<div class="col-sm-6">
@@ -234,45 +237,47 @@
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-header">
-								<h3 class="card-title">게시글 목록</h3>
+								<h3 class="card-title">글제목 : ${article.title}</h3>
 							</div>
-							<div class="card-body">
-								<table class="table table-bordered">
-									<tbody>
-										<tr>
-											<th style="width: 30px">#</th>
-											<th>제목</th>
-											<th style="width: 100px">작성자</th>
-											<th style="width: 150px">작성시간</th>
-											<th style="width: 60px">조회</th>
-										</tr>
-										<c:forEach items="${articles}" var="article">
-											<tr>
-												<td>${article.article_no}</td>
-												<td><a
-													href="${path}/article/read?article_no=${article.article_no}">${article.title}</a></td>
-												<td>${article.writer}</td>
-												<td><fmt:formatDate value="${article.regDate}"
-														pattern="yyyy-MM-dd a HH:mm" /></td>
-												<td><span class="badge bg-red">${article.viewCnt}</span></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+							<div class="card-body" style="height: 700px">
+								${article.content}</div>
+							<div class="card-footer">
+								<div class="user-block">
+									<img class="img-circle img-bordered-sm"
+										src="${path}/dist/img/user1-128x128.jpg" alt="user image">
+									<span class="username"> <a href="#">${article.writer}</a>
+									</span> <span class="description"><fmt:formatDate
+											pattern="yyyy-MM-dd" value="${article.regDate}" /></span>
+								</div>
 							</div>
 							<div class="card-footer">
-								<div class="float-right">
-									<button type="button" class="btn btn-success btn-flat"
-										id="writeBtn">
-										<i class="fa fa-pencil"></i> 글쓰기
+								<form role="form" method="post">
+									<input type="hidden" name="article_no"
+										value="${article.article_no}"> <input type="hidden"
+										name="page" value="${criteria.page}"> <input
+										type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+								</form>
+								<button type="submit" class="btn btn-primary listBtn">
+									<i class="fa fa-list"></i> 목록
+								</button>
+								<div class="pull-right">
+									<button type="submit" class="btn btn-warning modBtn">
+										<i class="fa fa-edit"></i> 수정
+									</button>
+									<button type="submit" class="btn btn-danger delBtn">
+										<i class="fa fa-trash"></i> 삭제
 									</button>
 								</div>
 							</div>
 						</div>
 					</div>
+					<!-- /.row -->
 				</div>
+				<!-- /.container-fluid -->
 			</div>
+			<!-- /.content -->
 		</div>
+		<!-- /.content-wrapper -->
 
 		<!-- Control Sidebar -->
 		<aside class="control-sidebar control-sidebar-dark">
@@ -285,7 +290,7 @@
 		<!-- /.control-sidebar -->
 
 		<!-- Main Footer -->
-		<%@ include file="../include/main_footer.jsp"%>
+		<%@ include file="../../include/main_footer.jsp"%>
 		<footer class="main-footer">
 			<!-- To the right -->
 			<div class="float-right d-none d-sm-inline">Anything you want</div>
@@ -298,23 +303,43 @@
 	<!-- ./wrapper -->
 
 	<!-- REQUIRED SCRIPTS -->
-	<%@ include file="../include/plugin_js.jsp"%>
+	<%@ include file="../../include/plugin_js.jsp"%>
 
 	<!-- jQuery -->
-	<script src="mypage/src/main/webapp/resources/plugins/jquery/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
-	<script src="mypage/src/main/webapp/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
-	<script src="mypage/src/main/webapp/resources/dist/js/adminlte.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/dist/js/adminlte.min.js"></script>
+
 	<script>
-		var result = "${msg}";
-		if (result == "regSuccess") {
-			alert("게시글 등록이 완료되었습니다.");
-		} else if (result == "modSuccess") {
-			alert("게시글 수정이 완료되었습니다.");
-		} else if (result == "delSuccess") {
-			alert("게시글 삭제가 완료되었습니다.");
-		}
-	</script>
+					$(document).ready(function () {
+	
+						var formObj = $("form[role='form']");
+						console.log(formObj);
+	
+						$(".modBtn").on("click", function () {
+							formObj.attr("action", "${path}/article/paging/modify");
+							formObj.attr("method", "get");
+							formObj.submit();
+						});
+	
+						$(".delBtn").on("click", function () {
+							formObj.attr("action", "${path}/article/paging/remove");
+							formObj.submit();
+						});
+	
+						$(".listBtn").on("click", function () {
+							formObj.attr("method", "get");
+							formObj.attr("action", "${path}/article/paging/list");
+							formObj.submit();
+						});
+	
+					});
+			
+		</script>
 </body>
 </html>

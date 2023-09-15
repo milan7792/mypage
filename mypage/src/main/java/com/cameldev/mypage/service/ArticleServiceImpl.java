@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.cameldev.mypage.commons.paging.Criteria;
+import com.cameldev.mypage.commons.paging.SearchCriteria;
 import com.cameldev.mypage.domain.ArticleVO;
 import com.cameldev.mypage.persistence.ArticleDAO;
 
@@ -53,5 +54,15 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public int countArticles(Criteria criteria) throws Exception {
 	    return articleDAO.countArticles(criteria);
+	}
+	
+	@Override
+	public List<ArticleVO> listSearch(SearchCriteria searchCriteria) throws Exception {
+	    return articleDAO.listSearch(searchCriteria);
+	}
+
+	@Override
+	public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
+	    return articleDAO.countSearchedArticles(searchCriteria);
 	}
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-	<%@ include file="../include/head.jsp" %>
+	<%@ include file="../../include/head.jsp" %>
 
 		<head>
 			<meta charset="UTF-8">
@@ -22,7 +22,7 @@
 			<div class="wrapper">
 
 				<!-- Navbar -->
-				<%@ include file="../include/main_header.jsp" %>
+				<%@ include file="../../include/main_header.jsp" %>
 					<nav class="main-header navbar navbar-expand navbar-white navbar-light">
 						<!-- Left navbar links -->
 						<ul class="navbar-nav">
@@ -196,7 +196,7 @@
 							</div>
 							<!-- /.sidebar -->
 						</aside>
-						<%@ include file="../include/left_column.jsp"%>
+						<%@ include file="../../include/left_column.jsp"%>
 						<!-- Content Wrapper. Contains page content -->
 						<div class="content-wrapper">
 							<!-- Content Header (Page header) -->
@@ -225,7 +225,8 @@
 							<div class="content">
 								<div class="container-fluid">
 									<div class="col-lg-12">
-										<form role="form" id="writeForm" method="post" action="${path}/article/modify">
+										<form role="form" id="writeForm" method="post" 
+											action="${path}/article/paging/modify">
 											<div class="card">
 												<div class="card-header">
 													<h3 class="card-title">게시글 작성</h3>
@@ -277,7 +278,7 @@
 						<!-- /.control-sidebar -->
 
 						<!-- Main Footer -->
-						<%@ include file="../include/main_footer.jsp" %>
+						<%@ include file="../../include/main_footer.jsp" %>
 							<footer class="main-footer">
 								<!-- To the right -->
 								<div class="float-right d-none d-sm-inline">Anything you want</div>
@@ -289,7 +290,7 @@
 			<!-- ./wrapper -->
 
 			<!-- REQUIRED SCRIPTS -->
-			<%@ include file="../include/plugin_js.jsp" %>
+			<%@ include file="../../include/plugin_js.jsp" %>
 
 				<!-- jQuery -->
 				<script src="mypage/src/main/webapp/resources/plugins/jquery/jquery.min.js"></script>
@@ -312,7 +313,7 @@
 							});
 
 							$(".listBtn").on("click", function () {
-								self.location = "${path}/article/listPaging?page=${citeria.page}&perPageNum=${criteria.perPageNum}";
+								self.location = "${path}/article/paging/list?page=${citeria.page}&perPageNum=${criteria.perPageNum}";
 							});
 
 						});

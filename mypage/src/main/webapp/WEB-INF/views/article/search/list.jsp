@@ -2,7 +2,7 @@
 <html lang="ko">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../include/head.jsp"%>
+<%@ include file="../../include/head.jsp"%>
 
 <head>
 <meta charset="UTF-8">
@@ -25,7 +25,7 @@
 	<div class="wrapper">
 
 		<!-- Navbar -->
-		<%@ include file="../include/main_header.jsp"%>
+		<%@ include file="../../include/main_header.jsp"%>
 		<nav
 			class="main-header navbar navbar-expand navbar-white navbar-light">
 			<!-- Left navbar links -->
@@ -203,7 +203,7 @@
 			</div>
 			<!-- /.sidebar -->
 		</aside>
-		<%@ include file="../include/left_column.jsp"%>
+		<%@ include file="../../include/left_column.jsp"%>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -250,7 +250,8 @@
 											<tr>
 												<td>${article.article_no}</td>
 												<td><a
-													href="${path}/article/read?article_no=${article.article_no}">${article.title}</a></td>
+													href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&articleNo=${article.articleNo}">
+														${article.title} </a></td>
 												<td>${article.writer}</td>
 												<td><fmt:formatDate value="${article.regDate}"
 														pattern="yyyy-MM-dd a HH:mm" /></td>
@@ -260,6 +261,72 @@
 									</tbody>
 								</table>
 							</div>
+
+							<div class="card-footer">
+								<div class="text-center">
+									<ul class="pagination">
+										<c:if test="${pageMaker.prev}">
+											<li><a
+												href="${path}/article/paging/search/list${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a></li>
+										</c:if>
+										<c:forEach begin="${pageMaker.startPage}"
+											end="${pageMaker.endPage}" var="idx">
+											<li
+												<c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
+												<a
+												href="${path}/article/paging/search/list${pageMaker.makeSearch(idx)}">${idx}</a>
+											</li>
+										</c:forEach>
+										<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+											<li><a
+												href="${path}/article/paging/search/list?${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음</a></li>
+										</c:if>
+									</ul>
+								</div>
+							</div>
+
+							<div class="card-footer">
+								<div class="row">
+									<div class="form-group col-sm-2">
+										<select class="form-control" name="searchType" id="searchType">
+											<option value="n"
+												<c:out value="${searchCriteria.searchType == null ? 'selected' : ''}"/>>::::::
+												선택 ::::::</option>
+											<option value="t"
+												<c:out value="${searchCriteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+											<option value="c"
+												<c:out value="${searchCriteria.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+											<option value="w"
+												<c:out value="${searchCriteria.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+											<option value="tc"
+												<c:out value="${searchCriteria.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+											<option value="cw"
+												<c:out value="${searchCriteria.searchType eq 'cw' ? 'selected' : ''}"/>>내용+작성자</option>
+											<option value="tcw"
+												<c:out value="${searchCriteria.searchType eq 'tcw' ? 'selected' : ''}"/>>제목+내용+작성자</option>
+										</select>
+									</div>
+									<div class="form-group col-sm-10">
+										<div class="input-group">
+											<input type="text" class="form-control" name="keyword"
+												id="keywordInput" value="${searchCriteria.keyword}"
+												placeholder="검색어"> <span class="input-group-btn">
+												<button type="button" class="btn btn-primary btn-flat"
+													id="searchBtn">
+													<i class="fa fa-search"></i> 검색
+												</button>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="float-right">
+									<button type="button" class="btn btn-success btn-flat"
+										id="writeBtn">
+										<i class="fa fa-pencil"></i> 글쓰기
+									</button>
+								</div>
+							</div>
+
 							<div class="card-footer">
 								<div class="float-right">
 									<button type="button" class="btn btn-success btn-flat"
@@ -285,7 +352,7 @@
 		<!-- /.control-sidebar -->
 
 		<!-- Main Footer -->
-		<%@ include file="../include/main_footer.jsp"%>
+		<%@ include file="../../include/main_footer.jsp"%>
 		<footer class="main-footer">
 			<!-- To the right -->
 			<div class="float-right d-none d-sm-inline">Anything you want</div>
@@ -298,23 +365,44 @@
 	<!-- ./wrapper -->
 
 	<!-- REQUIRED SCRIPTS -->
-	<%@ include file="../include/plugin_js.jsp"%>
+	<%@ include file="../../include/plugin_js.jsp"%>
 
 	<!-- jQuery -->
-	<script src="mypage/src/main/webapp/resources/plugins/jquery/jquery.min.js"></script>
+	<script
+		src="mypage/src/main/webapp/resources/plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
-	<script src="mypage/src/main/webapp/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="mypage/src/main/webapp/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
 	<script src="mypage/src/main/webapp/resources/dist/js/adminlte.min.js"></script>
 	<script>
-		var result = "${msg}";
-		if (result == "regSuccess") {
-			alert("게시글 등록이 완료되었습니다.");
-		} else if (result == "modSuccess") {
-			alert("게시글 수정이 완료되었습니다.");
-		} else if (result == "delSuccess") {
-			alert("게시글 삭제가 완료되었습니다.");
-		}
+		$(document)
+				.ready(
+						function() {
+							var result = "${msg}";
+							if (result == "regSuccess") {
+								alert("게시글 등록이 완료되었습니다.");
+							} else if (result == "modSuccess") {
+								alert("게시글 수정이 완료되었습니다.");
+							} else if (result == "delSuccess") {
+								alert("게시글 삭제가 완료되었습니다.");
+							}
+
+							$("#searchBtn")
+									.on(
+											"click",
+											function(event) {
+												self.location = "${path}/article/paging/search/list${pageMaker.makeQuery(1)}"
+														+ "&searchType="
+														+ $(
+																"select option:selected")
+																.val()
+														+ "&keyword="
+														+ encodeURIComponent($(
+																"#keywordInput")
+																.val());
+											});
+						});
 	</script>
 </body>
 </html>

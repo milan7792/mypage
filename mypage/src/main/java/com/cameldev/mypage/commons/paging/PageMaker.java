@@ -1,5 +1,8 @@
 package com.cameldev.mypage.commons.paging;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -99,6 +102,30 @@ public class PageMaker {
 
 	    return uriComponents.toUriString();
 	}
-    
-    // Getter Setter 추가
+	
+	// 검색조건과 검색키워드에 해당하는 URI 작업 메소드
+	public String makeSearch(int page) {
+
+	    UriComponents uriComponents = UriComponentsBuilder.newInstance()
+	            .queryParam("page", page)
+	            .queryParam("pagePageNum", criteria.getPerPageNum())
+	            .queryParam("searchType", ((SearchCriteria) criteria).getSearchType())
+	            .queryParam("keyword", encoding(((SearchCriteria) criteria).getKeyword()))
+	            .build();
+
+	    return uriComponents.toUriString();
+	}
+	
+	// 검색키워드의 인코딩 처리를 위한 메소드
+	private String encoding(String keyword) {
+	    if (keyword == null || keyword.trim().length() == 0) {
+	        return "";
+	    }
+
+	    try {
+	        return URLEncoder.encode(keyword, "UTF-8");
+	    } catch (UnsupportedEncodingException e) {
+	        return "";
+	    }
+	}
 }
