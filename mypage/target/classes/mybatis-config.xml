@@ -4,8 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-	<typeAliases>
-		<typeAlias type="com.cameldev.mypage.domain.ArticleVO" alias="ArticleVO" />
-	</typeAliases>
+    <typeAliases>
+        <typeAlias type="com.cameldev.mypage.domain.ArticleVO" alias="ArticleVO" />
+        <typeAlias type="com.cameldev.mypage.domain.ReplyVO" alias="ReplyVO" />
+    </typeAliases>
 
 </configuration>

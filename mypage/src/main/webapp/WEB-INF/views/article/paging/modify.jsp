@@ -231,25 +231,26 @@
 												<div class="card-header">
 													<h3 class="card-title">게시글 작성</h3>
 												</div>
-												<div class="box-body">
-													<input type="hidden" name="article_no" value="${article.article_no}">
-													<input type="hidden" name="page" value="${criteria.page}">
-													<input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
-													<div class="form-group">
-														<label for="title">제목</label>
-														<input class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" value="${article.title}">
-													</div>
-													<div class="form-group">
-														<label for="content">내용</label>
-														<textarea class="form-control" id="content" name="content" rows="30"
-																  placeholder="내용을 입력해주세요" style="resize: none;">${article.content}</textarea>
-													</div>
-													<div class="form-group">
-														<label for="writer">작성자</label>
-														<input class="form-control" id="writer" name="writer" value="${article.writer}" readonly>
-													</div>
-												</div>
-												<div class="card-footer">
+								<div class="box-body">
+									<input type="hidden" name="article_no" value="${article.article_no}"> 
+									<input type="hidden" name="page" value="${criteria.page}"> 
+									<input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
+									<div class="form-group">
+										<label for="title">제목</label> <input class="form-control"
+											id="title" name="title" placeholder="제목을 입력해주세요"
+											value="${article.title}">
+									</div>
+									<div class="form-group">
+										<label for="content">내용</label>
+										<textarea class="form-control" id="content" name="content"
+											rows="30" placeholder="내용을 입력해주세요" style="resize: none;">${article.content}</textarea>
+									</div>
+									<div class="form-group">
+										<label for="writer">작성자</label> <input class="form-control"
+											id="writer" name="writer" value="${article.writer}" readonly>
+									</div>
+								</div>
+								<div class="card-footer">
 													<button type="button" class="btn btn-primary"><i class="fa fa-list"></i> 목록</button>
 													<div class="float-right">
 														<button type="button" class="btn btn-warning cancelBtn"><i class="fa fa-trash"></i> 취소</button>
@@ -298,25 +299,26 @@
 				<script src="mypage/src/main/webapp/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 				<!-- AdminLTE App -->
 				<script src="mypage/src/main/webapp/resources/dist/js/adminlte.min.js"></script>
+				
 				<script>
-					$(document).ready(function () {
+				$(document).ready(function () {
 
-							var formObj = $("form[role='form']");
-							console.log(formObj);
+				    var formObj = $("form[role='form']");
+				    console.log(formObj);
 
-							$(".modBtn").on("click", function () {
-								formObj.submit();
-							});
+				    $(".modBtn").on("click", function () {
+				        formObj.submit();
+				    });
 
-							$(".cancelBtn").on("click", function () {
-								history.go(-1);
-							});
+				    $(".cancelBtn").on("click", function () {
+				        history.go(-1);
+				    });
 
-							$(".listBtn").on("click", function () {
-								self.location = "${path}/article/paging/list?page=${citeria.page}&perPageNum=${criteria.perPageNum}";
-							});
+				    $(".listBtn").on("click", function () {
+				        self.location = "${path}/article/paging/list?page=${criteria.page}&perPageNum=${criteria.perPageNum}";
+				    });
 
-						});
+				});
 				</script>
 		</body>
 </html>

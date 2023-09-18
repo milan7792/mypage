@@ -238,30 +238,28 @@
 								<div class="card-header">
 									<h3 class="card-title">게시글 작성</h3>
 								</div>
+								
 								<div class="card-body">
-									<input type="hidden" name="article_no"
-										value="${article.article_no}"> <input type="hidden"
-										name="page" value="${searchCriteria.page}"> <input
-										type="hidden" name="perPageNum"
-										value="${searchCriteria.perPageNum}"> <input
-										type="hidden" name="searchType"
-										value="${searchCriteria.searchType}"> <input
-										type="hidden" name="keyword" value="${searchCriteria.keyword}">
+									<input type="hidden" name="article_no" value="${article.article_no}"> 
+									<input type="hidden" name="page" value="${searchCriteria.page}"> 
+									<input type="hidden" name="perPageNum" value="${searchCriteria.perPageNum}"> 
+									<input type="hidden" name="searchType" value="${searchCriteria.searchType}"> 
+									<input type="hidden" name="keyword" value="${searchCriteria.keyword}">
 									<div class="form-group">
-										<label for="title">제목</label> <input class="form-control"
-											id="title" name="title" placeholder="제목을 입력해주세요"
-											value="${article.title}">
+										<label for="title">제목</label> 
+										<input class="form-control" id="title" name="title" placeholder="제목을 입력해주세요" value="${article.title}">
 									</div>
 									<div class="form-group">
 										<label for="content">내용</label>
-										<textarea class="form-control" id="content" name="content"
-											rows="30" placeholder="내용을 입력해주세요" style="resize: none;">${article.content}</textarea>
+										<textarea class="form-control" id="content" name="content" rows="30" 
+													placeholder="내용을 입력해주세요" style="resize: none;">${article.content}</textarea>
 									</div>
 									<div class="form-group">
-										<label for="writer">작성자</label> <input class="form-control"
-											id="writer" name="writer" value="${article.writer}" readonly>
+										<label for="writer">작성자</label> 
+										<input class="form-control" id="writer" name="writer" value="${article.writer}" readonly>
 									</div>
 								</div>
+								
 								<div class="card-footer">
 									<button type="button" class="btn btn-primary">
 										<i class="fa fa-list"></i> 목록
@@ -320,6 +318,7 @@
 		src="mypage/src/main/webapp/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
 	<script src="mypage/src/main/webapp/resources/dist/js/adminlte.min.js"></script>
+	
 	<script>
 	$(document).ready(function () {
 

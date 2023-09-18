@@ -114,4 +114,4 @@ public class ArticlePagingController {
 
         return "redirect:/article/paging/list";
     }
-}    
+}   
