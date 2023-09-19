@@ -12,13 +12,20 @@
 <title>BU | Starter</title>
 
 <!-- Font Awesome Icons -->
-<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="/mypage/resources/plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="dist/css/adminlte.min.css">
+<link rel="stylesheet" href="/mypage/resources/dist/css/adminlte.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
 	rel="stylesheet">
+	
+	<!-- jQuery -->
+	<script src="/mypage/resources/plugins/jquery/jquery.min.js"></script>
+	<!-- Bootstrap 4 -->
+	<script src="/mypage/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="/mypage/resources/dist/js/adminlte.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -61,7 +68,7 @@
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 						<a href="#" class="dropdown-item"> <!-- Message Start -->
 							<div class="media">
-								<img src="dist/img/user1-128x128.jpg" alt="User Avatar"
+								<img src="/mypage/resources/dist/img/user1-128x128.jpg" alt="User Avatar"
 									class="img-size-50 mr-3 img-circle">
 								<div class="media-body">
 									<h3 class="dropdown-item-title">
@@ -78,7 +85,7 @@
 						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item"> <!-- Message Start -->
 							<div class="media">
-								<img src="dist/img/user8-128x128.jpg" alt="User Avatar"
+								<img src="/mypage/resources/dist/img/user8-128x128.jpg" alt="User Avatar"
 									class="img-size-50 img-circle mr-3">
 								<div class="media-body">
 									<h3 class="dropdown-item-title">
@@ -95,7 +102,7 @@
 						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item"> <!-- Message Start -->
 							<div class="media">
-								<img src="dist/img/user3-128x128.jpg" alt="User Avatar"
+								<img src="/mypage/resources/dist/img/user3-128x128.jpg" alt="User Avatar"
 									class="img-size-50 img-circle mr-3">
 								<div class="media-body">
 									<h3 class="dropdown-item-title">
@@ -150,7 +157,7 @@
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
 			<a href="index3.html" class="brand-link"> <img
-				src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+				src="/mypage/resources/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
 				class="brand-image img-circle elevation-3" style="opacity: .8">
 				<span class="brand-text font-weight-light">AdminLTE 3</span>
 			</a>
@@ -160,7 +167,7 @@
 				<!-- Sidebar user panel (optional) -->
 				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 					<div class="image">
-						<img src="dist/img/user2-160x160.jpg"
+						<img src="/mypage/resources/dist/img/user2-160x160.jpg"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
 					<div class="info">
@@ -331,22 +338,213 @@
 
 	<!-- REQUIRED SCRIPTS -->
 	<%@ include file="../include/plugin_js.jsp"%>
-
-	<!-- jQuery -->
-	<script src="mypage/src/main/webapp/resources/plugins/jquery/jquery.min.js"></script>
-	<!-- Bootstrap 4 -->
-	<script src="mypage/src/main/webapp/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- AdminLTE App -->
-	<script src="mypage/src/main/webapp/resources/dist/js/adminlte.min.js"></script>
+	
 	<script>
-		var result = "${msg}";
-		if (result == "regSuccess") {
-			alert("게시글 등록이 완료되었습니다.");
-		} else if (result == "modSuccess") {
-			alert("게시글 수정이 완료되었습니다.");
-		} else if (result == "delSuccess") {
-			alert("게시글 삭제가 완료되었습니다.");
+	$(document).ready(function () {
+
+		// 3번째 게시글
+		var article_no = 3;
+		
+	    // 목록페이지 번호 변수 선언, 1로 초기화(첫번째 페이지)
+		var replyPageNum = 1;
+	    
+		// 댓글 목록 호출
+		getRepliesPaging(replyPageNum);
+
+		// 댓글 목록 출력 함수
+		function getReplies() {
+
+		    $.getJSON("${path}/replies/all/" + article_no, function (data) {
+
+		        console.log(data);
+
+		        var str = "";
+
+		        $(data).each(function () {
+		            str += "<li data-reply_no='" + this.reply_no + "' class='replyLi'>"
+		                +   "<p class='reply_text'>" + this.reply_text + "</p>"
+		                +   "<p class='reply_writer'>" + this.reply_writer + "</p>"
+		                +   "<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+		                + "</li>"
+		                + "<hr/>";
+
+		        });
+
+		        $("#replies").html(str);
+
+		    });
+
 		}
+		
+		$(".replyAddBtn").on("click",function() {
+
+		    // 화면으로부터 입력 받은 변수값의 처리
+		    var reply_text = $("#newReplyText");
+		    var reply_writer = $("#newReplyWriter");
+
+		    var reply_textVal = reply_text.val();
+		    var reply_writerrVal = reply_writer.val();
+		    console.log("1212121212");
+		    // AJAX 통신 : POST
+		    $.ajax({
+		        type : "post",
+		        url : "${path}/replies",
+		        headers : {
+		            "Content-type" : "application/json",
+		            "X-HTTP-Method-Override" : "POST"
+		        },
+		        dataType : "text",
+		        data : JSON.stringify({
+		            article_no : article_no,
+		            reply_text : reply_textVal,
+		            reply_writer : reply_writerrVal
+		        }),
+		        success : function (result) {
+		            // 성공적인 댓글 등록 처리 알림
+		            if (result == "regSuccess") {
+		                alert("댓글 등록 완료!");
+		            }
+		            getRepliesPaging(replyPageNum); // 댓글 목록 출력 함수 호출
+		            reply_text.val(""); // 댓글 내용 초기화
+		            reply_writer.val(""); // 댓글 작성자 초기화
+		        }
+		    });
+		});
+		
+		$("#replies").on("click", ".replyLi button", function () {
+		    var reply = $(this).parent();
+
+		    var reply_no = reply.attr("data-reply_no");
+		    var reply_text = reply.find(".reply_text").text();
+		    var reply_writer = reply.find(".reply_writer").text();
+
+		    $("#reply_no").val(reply_no);
+		    $("#reply_text").val(reply_text);
+		    $("#reply_writer").val(reply_writer);
+
+		});
+		
+		$(".modalDelBtn").on("click", function () {
+
+		    // 댓글 번호
+		    var reply_no = $(this).parent().parent().find("#reply_no").val();
+
+		    // AJAX통신 : DELETE
+		    $.ajax({
+		        type : "delete",
+		        url : "${path}/replies/" + reply_no,
+		        headers : {
+		            "Content-type" : "application/json",
+		            "X-HTTP-Method-Override" : "DELETE"
+		        },
+		        dataType : "text",
+		        success : function (result) {
+		            console.log("result : " + result);
+		            if (result == "delSuccess") {
+		                alert("댓글 삭제 완료!");
+		                $("#modifyModal").modal("hide"); // Modal 닫기
+		                getRepliesPaging(replyPageNum); // 댓글 목록 갱신
+		            }
+		        }
+		    });
+
+		});
+		
+		$(".modalModBtn").on("click", function () {
+
+		    // 댓글 선택자
+		    var reply = $(this).parent().parent();
+		    // 댓글번호
+		    var reply_no = reply.find("#reply_no").val();
+		    // 수정한 댓글내용
+		    var reply_text = reply.find("#reply_text").val();
+
+		    // AJAX통신 : PUT
+		    $.ajax({
+		        type : "put",
+		        url : "${path}/replies/" + reply_no,
+		        headers : {
+		            "Content-type" : "application/json",
+		            "X-HTTP-Method-Override" : "PUT"
+		        },
+		        data : JSON.stringify(
+		            {reply_text : reply_text}
+		        ),
+		        dataType : "text",
+		        success : function (result) {
+		            console.log("result : " + result);
+		            if (result == "modSuccess") {
+		                alert("댓글 수정 완료!");
+		                $("#modifyModal").modal("hide"); // Modal 닫기
+		                getRepliesPaging(replyPageNum); // 댓글 목록 갱신
+		            }
+		        }
+		    });
+
+		});
+		
+		function getRepliesPaging(page) {
+
+		    $.getJSON("${path}/replies/" + article_no + "/" + page, function (data) {
+		        console.log(data);
+
+		        var str = "";
+
+		        $(data.replies).each(function () {
+		            str += "<li data-reply_no='" + this.reply_no + "' class='replyLi'>"
+		                +  "<p class='reply_text'>" + this.reply_text + "</p>"
+		                +  "<p class='reply_writer'>" + this.reply_writer + "</p>"
+		                +  "<button type='button' class='btn btn-xs btn-success' data-toggle='modal' data-target='#modifyModal'>댓글 수정</button>"
+		                +  "</li>"
+		                +  "<hr/>";
+		        });
+
+		        $("#replies").html(str);
+
+		        // 페이지 번호 출력 호출
+		        printPageNumbers(data.pageMaker);
+
+		    });
+
+		}
+
+		// 댓글 목록 페이지 번호 출력 함수
+		function printPageNumbers(pageMaker) {
+
+		    var str = "";
+
+		    // 이전 버튼 활성화
+		    if (pageMaker.prev) {
+		        str += "<li class=\"page-item\"><a class=\"page-link\" href='"+(pageMaker.startPage-1)+"'>이전</a></li>";
+		    }
+
+		    // 페이지 번호
+		    for (var i = pageMaker.startPage, len = pageMaker.endPage; i <= len; i++) {
+		        var strCalss = pageMaker.criteria.page == i ? 'class=active' : '';
+		        str += "<li class=\"page-item\" "+strCalss+"><a class=\"page-link\" href='"+i+"'>"+i+"</a></li>";
+		    }
+
+		    // 다음 버튼 활성화
+		    if (pageMaker.next) {
+		        str += "<li class=\"page-item\"><a class=\"page-link\" href='"+(pageMaker.endPage + 1)+"'>다음</a></li>";
+		    }
+
+		    $(".pagination-sm").html(str);
+		}
+		
+		
+
+		// 목록페이지 번호 클릭 이벤트
+		$(".pagination").on("click", "li a", function (event) {
+
+		    event.preventDefault();
+		    replyPageNum = $(this).attr("href"); // 목록 페이지 번호 추출
+		    getRepliesPaging(replyPageNum); // 목록 페이지 호출
+
+		});
+
+	});
 	</script>
+
 </body>
 </html>

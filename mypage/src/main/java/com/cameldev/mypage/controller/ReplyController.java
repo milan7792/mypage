@@ -23,69 +23,69 @@ import com.cameldev.mypage.service.ReplyService;
 @RequestMapping("/replies")
 public class ReplyController {
 
-	private final ReplyService replyService;
+    private final ReplyService replyService;
 
-	@Inject
-	public ReplyController(ReplyService replyService) {
-		this.replyService = replyService;
-	}
-
-	// Reply Register
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<String> register(@RequestBody ReplyVO replyVO) {
-		ResponseEntity<String> entity = null;
-		try {
-			replyService.create(replyVO);
-			entity = new ResponseEntity<String>("regSuccess", HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}
-
-	// Reply List
-	@RequestMapping(value = "/all/{articleNo}", method = RequestMethod.GET)
-	public ResponseEntity<List<ReplyVO>> list(@PathVariable("article_no") Integer article_no) {
-		ResponseEntity<List<ReplyVO>> entity = null;
-		try {
-			entity = new ResponseEntity<List<ReplyVO>>(replyService.list(article_no), HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<List<ReplyVO>>(HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}
-
-	// Reply Modify
-	@RequestMapping(value = "/{reply_no}", method = { RequestMethod.PUT, RequestMethod.PATCH })
-	public ResponseEntity<String> update(@PathVariable("reply_no") Integer reply_no, @RequestBody ReplyVO replyVO) {
-		ResponseEntity<String> entity = null;
-		try {
-			replyVO.setReply_no(reply_no);
-			replyService.update(replyVO);
-			entity = new ResponseEntity<String>("modSuccess", HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}
-
-	// Reply Delete
-	@RequestMapping(value = "/{reply_no}", method = RequestMethod.DELETE)
-	public ResponseEntity<String> delete(@PathVariable("reply_no") Integer reply_no) {
-		ResponseEntity<String> entity = null;
-		try {
-			replyService.delete(reply_no);
-			entity = new ResponseEntity<String>("delSuccess", HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}
-	
+    @Inject
+    public ReplyController(ReplyService replyService) {
+        this.replyService = replyService;
+    }
+    
+    //Reply Register
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public ResponseEntity<String> register(@RequestBody ReplyVO replyVO) {
+        ResponseEntity<String> entity = null;
+        try {
+            replyService.create(replyVO);
+            entity = new ResponseEntity<String>("regSuccess", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+    
+    //Reply List
+    @RequestMapping(value = "/all/{articleNo}", method = RequestMethod.GET)
+    public ResponseEntity<List<ReplyVO>> list(@PathVariable("article_no") Integer article_no) {
+        ResponseEntity<List<ReplyVO>> entity = null;
+        try {
+            entity = new ResponseEntity<List<ReplyVO>>(replyService.list(article_no), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<List<ReplyVO>>(HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+    
+    //Reply Modify
+    @RequestMapping(value = "/{reply_no}", method = {RequestMethod.PUT, RequestMethod.PATCH})
+    public ResponseEntity<String> update(@PathVariable("reply_no") Integer reply_no, @RequestBody ReplyVO replyVO) {
+        ResponseEntity<String> entity = null;
+        try {
+            replyVO.setReply_no(reply_no);
+            replyService.update(replyVO);
+            entity = new ResponseEntity<String>("modSuccess", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+    
+    //Reply Delete
+    @RequestMapping(value = "/{reply_no}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> delete(@PathVariable("reply_no") Integer reply_no) {
+        ResponseEntity<String> entity = null;
+        try {
+            replyService.delete(reply_no);
+            entity = new ResponseEntity<String>("delSuccess", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+    
 	// Reply Paging List
 	@RequestMapping(value = "/{article_no}/{page}", method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> listPaging(@PathVariable("article_no") Integer article_no,

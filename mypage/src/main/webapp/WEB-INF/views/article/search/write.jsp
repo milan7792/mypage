@@ -233,7 +233,7 @@
 				<div class="container-fluid">
 					<div class="col-lg-12">
 						<form role="form" id="writeForm" method="post"
-							action="${path}/article/write">
+							action="${path}/article/paging/search/write">
 							<div class="card">
 								<div class="card-header with-border">
 									<h3 class="card-title">게시글 작성</h3>

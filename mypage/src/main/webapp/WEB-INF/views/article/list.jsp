@@ -306,6 +306,7 @@
 	<script src="mypage/src/main/webapp/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
 	<script src="mypage/src/main/webapp/resources/dist/js/adminlte.min.js"></script>
+ 
 	<script>
 		var result = "${msg}";
 		if (result == "regSuccess") {

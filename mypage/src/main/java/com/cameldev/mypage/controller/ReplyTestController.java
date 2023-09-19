@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/reply")
 public class ReplyTestController {
 
-	@RequestMapping("/test")
-	public String replyAjaxTest() {
-		return "/reply/reply_test";
-	}
+    @RequestMapping("/test")
+    public String replyAjaxTest() {
+        return "/reply/reply_test";
+    }
 
 }

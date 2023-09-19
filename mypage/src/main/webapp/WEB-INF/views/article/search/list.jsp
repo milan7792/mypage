@@ -12,13 +12,20 @@
 <title>BU | Starter</title>
 
 <!-- Font Awesome Icons -->
-<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="/mypage/resources/plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="dist/css/adminlte.min.css">
+<link rel="stylesheet" href="/mypage/resources/dist/css/adminlte.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
 	rel="stylesheet">
+	
+	<!-- jQuery -->
+	<script src="/mypage/resources/plugins/jquery/jquery.min.js"></script>
+	<!-- Bootstrap 4 -->
+	<script src="/mypage/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="/mypage/resources/dist/js/adminlte.min.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -61,7 +68,7 @@
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 						<a href="#" class="dropdown-item"> <!-- Message Start -->
 							<div class="media">
-								<img src="dist/img/user1-128x128.jpg" alt="User Avatar"
+								<img src="/mypage/dist/img/user1-128x128.jpg" alt="User Avatar"
 									class="img-size-50 mr-3 img-circle">
 								<div class="media-body">
 									<h3 class="dropdown-item-title">
@@ -78,7 +85,7 @@
 						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item"> <!-- Message Start -->
 							<div class="media">
-								<img src="dist/img/user8-128x128.jpg" alt="User Avatar"
+								<img src="/mypage/dist/img/user8-128x128.jpg" alt="User Avatar"
 									class="img-size-50 img-circle mr-3">
 								<div class="media-body">
 									<h3 class="dropdown-item-title">
@@ -95,7 +102,7 @@
 						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item"> <!-- Message Start -->
 							<div class="media">
-								<img src="dist/img/user3-128x128.jpg" alt="User Avatar"
+								<img src="/mypage/dist/img/user3-128x128.jpg" alt="User Avatar"
 									class="img-size-50 img-circle mr-3">
 								<div class="media-body">
 									<h3 class="dropdown-item-title">
@@ -150,7 +157,7 @@
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
 			<a href="index3.html" class="brand-link"> <img
-				src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+				src="/mypage/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
 				class="brand-image img-circle elevation-3" style="opacity: .8">
 				<span class="brand-text font-weight-light">AdminLTE 3</span>
 			</a>
@@ -160,7 +167,7 @@
 				<!-- Sidebar user panel (optional) -->
 				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 					<div class="image">
-						<img src="dist/img/user2-160x160.jpg"
+						<img src="/mypage/dist/img/user2-160x160.jpg"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
 					<div class="info">
@@ -251,8 +258,9 @@
 										<c:forEach items="${articles}" var="article">
 											<tr>
 												<td>${article.article_no}</td>
-												<td><a
-													href="${path}/article/paging/read${pageMaker.makeQuery(pageMaker.criteria.page)}&article_no=${article.article_no}">${article.title}</a></td>
+											<td><a
+													href="${path}/article/paging/search/read${pageMaker.makeQuery(pageMaker.criteria.page)}&article_no=${article.article_no}">
+													${article.title}</a></td>
 												<td>${article.writer}</td>
 												<td><fmt:formatDate value="${article.regDate}"
 														pattern="yyyy-MM-dd" /></td>
@@ -262,30 +270,30 @@
 									</tbody>
 								</table>
 							</div>
-										
+
 							<div class="card-footer">
 								<nav aria-label="Contacts Page Navigation">
 									<ul class="pagination justify-content-center m-0">
 										<c:if test="${pageMaker.prev}">
 											<li class="page-item"><a class="page-link"
-												href="${path}/article/paging/list${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
+												href="${path}/article/paging/search/list${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a></li>
 										</c:if>
 										<c:forEach begin="${pageMaker.startPage}"
 											end="${pageMaker.endPage}" var="idx">
 											<li class="page-item"
 												<c:out value="${pageMaker.criteria.page == idx ? 'class=active' : ''}"/>>
 												<a class="page-link"
-												href="${path}/article/paging/list${pageMaker.makeQuery(idx)}">${idx}</a>
+												href="${path}/article/paging/search/list${pageMaker.makeSearch(idx)}">${idx}</a>
 											</li>
 										</c:forEach>
 										<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 											<li class="page-item"><a class="page-link"
-												href="${path}/article/Paging/list?${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+												href="${path}/article/Paging/search/list?${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음</a></li>
 										</c:if>
 									</ul>
 								</nav>
 							</div>
-
+							
 							<div class="card-footer">
 								<div class="row">
 									<div class="form-group col-sm-2">
@@ -327,7 +335,7 @@
 									</button>
 								</div>
 							</div>
-
+							
 						</div>
 					</div>
 				</div>
@@ -360,12 +368,7 @@
 	<!-- REQUIRED SCRIPTS -->
 	<%@ include file="../../include/plugin_js.jsp"%>
 
-	<!-- jQuery -->
-	<script src="mypage/src/main/webapp/resources/plugins/jquery/jquery.min.js"></script>
-	<!-- Bootstrap 4 -->
-	<script src="mypage/src/main/webapp/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- AdminLTE App -->
-	<script src="mypage/src/main/webapp/resources/dist/js/adminlte.min.js"></script>
+	
 	
 	<script>
 	$(document).ready(function () {
@@ -378,7 +381,7 @@
 		    alert("게시글 삭제가 완료되었습니다.");
 		}
 		
-	    $("#searchBtn").on("click", function (event) {
+		$("#searchBtn").on("click", function (event) {
 	        self.location =
 	            "${path}/article/paging/search/list${pageMaker.makeQuery(1)}"
 	            + "&searchType=" + $("select option:selected").val()

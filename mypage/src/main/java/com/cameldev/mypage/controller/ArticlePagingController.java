@@ -21,97 +21,92 @@ import com.cameldev.mypage.service.ArticleService;
 @RequestMapping("/article/paging")
 public class ArticlePagingController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ArticlePagingController.class);
+   private static final Logger logger = LoggerFactory.getLogger(ArticlePagingController.class);
 
-    private final ArticleService articleService;
+   private final ArticleService articleService;
 
-    @Inject
-    public ArticlePagingController(ArticleService articleService) {
-        this.articleService = articleService;
-    }
-    
-    @RequestMapping(value = "/write", method = RequestMethod.GET)
-    public String writeGET() {
+   @Inject
+   public ArticlePagingController(ArticleService articleService) {
+      this.articleService = articleService;
+   }
 
-        logger.info("paging writeGET() called...");
+   @RequestMapping(value = "/write", method = RequestMethod.GET)
+   public String writeGET() {
 
-        return "article/paging/write";
-    }
+      logger.info("paging writeGET() called...");
 
-    @RequestMapping(value = "/write", method = RequestMethod.POST)
-    public String writePOST(ArticleVO articleVO,
-                            RedirectAttributes redirectAttributes) throws Exception {
+      return "article/paging/write";
+   }
 
-        logger.info("paging writePOST() called...");
+   @RequestMapping(value = "/write", method = RequestMethod.POST)
+   public String writePOST(ArticleVO articleVO, RedirectAttributes redirectAttributes) throws Exception {
 
-        articleService.create(articleVO);
-        redirectAttributes.addFlashAttribute("msg", "regSuccess");
+      logger.info("paging writePOST() called...");
 
-        return "redirect:/article/paging/list";
-    }
+      articleService.create(articleVO);
+      redirectAttributes.addFlashAttribute("msg", "regSuccess");
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model, Criteria criteria) throws Exception {
+      return "redirect:/article/paging/list";
+   }
 
-        logger.info("paging list() called ...");
+   @RequestMapping(value = "/list", method = RequestMethod.GET)
+   public String list(Model model, Criteria criteria) throws Exception {
 
-        PageMaker pageMaker = new PageMaker();
-        pageMaker.setCriteria(criteria);
-        pageMaker.setTotalCount(articleService.countArticles(criteria));
+      logger.info("paging list() called ...");
 
-        model.addAttribute("articles", articleService.listCriteria(criteria));
-        model.addAttribute("pageMaker", pageMaker);
+      PageMaker pageMaker = new PageMaker();
+      pageMaker.setCriteria(criteria);
+      pageMaker.setTotalCount(articleService.countArticles(criteria));
 
-        return "article/paging/list";
-    }
+      model.addAttribute("articles", articleService.listCriteria(criteria));
+      model.addAttribute("pageMaker", pageMaker);
 
-    @RequestMapping(value = "/read", method = RequestMethod.GET)
-    public String read(@RequestParam("article_no") int article_no,
-                       @ModelAttribute("criteria") Criteria criteria,
-                       Model model) throws Exception {
+      return "article/paging/list";
+   }
 
-        logger.info("paging read() called ...");
-        model.addAttribute("article", articleService.read(article_no));
+   @RequestMapping(value = "/read", method = RequestMethod.GET)
+   public String read(@RequestParam("article_no") int article_no, @ModelAttribute("criteria") Criteria criteria,
+         Model model) throws Exception {
 
-        return "article/paging/read";
-    }
+      logger.info("paging read() called ...");
+      model.addAttribute("article", articleService.read(article_no));
 
-    @RequestMapping(value = "/modify", method = RequestMethod.GET)
-    public String modifyGET(@RequestParam("article_no") int article_no,
-                            @ModelAttribute("criteria") Criteria criteria,
-                            Model model) throws Exception {
+      return "article/paging/read";
+   }
 
-        logger.info("paging modifyGet() called ...");
-        model.addAttribute("article", articleService.read(article_no));
+   @RequestMapping(value = "/modify", method = RequestMethod.GET)
+   public String modifyGET(@RequestParam("article_no") int article_no, @ModelAttribute("criteria") Criteria criteria,
+         Model model) throws Exception {
 
-        return "article/paging/modify";
-    }
+      logger.info("paging modifyGet() called ...");
+      model.addAttribute("article", articleService.read(article_no));
 
-    @RequestMapping(value = "/modify", method = RequestMethod.POST)
-    public String modifyPOST(ArticleVO articleVO,
-                                   Criteria criteria,
-                                   RedirectAttributes redirectAttributes) throws Exception {
+      return "article/paging/modify";
+   }
 
-        logger.info("paging modifyPOST() called ...");
-        articleService.update(articleVO);
-        redirectAttributes.addAttribute("page", criteria.getPage());
-        redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
-        redirectAttributes.addFlashAttribute("msg", "modSuccess");
+   @RequestMapping(value = "/modify", method = RequestMethod.POST)
+   public String modifyPOST(ArticleVO articleVO, Criteria criteria, RedirectAttributes redirectAttributes)
+         throws Exception {
 
-        return "redirect:/article/paging/list";
-    }
+      logger.info("paging modifyPOST() called ...");
+      articleService.update(articleVO);
+      redirectAttributes.addAttribute("page", criteria.getPage());
+      redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
+      redirectAttributes.addFlashAttribute("msg", "modSuccess");
 
-    @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public String remove(@RequestParam("article_no") int article_no,
-                               Criteria criteria,
-                               RedirectAttributes redirectAttributes) throws Exception {
+      return "redirect:/article/paging/list";
+   }
 
-        logger.info("paging remove() called ...");
-        articleService.delete(article_no);
-        redirectAttributes.addAttribute("page", criteria.getPage());
-        redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
-        redirectAttributes.addFlashAttribute("msg", "delSuccess");
+   @RequestMapping(value = "/remove", method = RequestMethod.POST)
+   public String remove(@RequestParam("article_no") int article_no, Criteria criteria,
+         RedirectAttributes redirectAttributes) throws Exception {
 
-        return "redirect:/article/paging/list";
-    }
-}   
+      logger.info("paging remove() called ...");
+      articleService.delete(article_no);
+      redirectAttributes.addAttribute("page", criteria.getPage());
+      redirectAttributes.addAttribute("perPageNum", criteria.getPerPageNum());
+      redirectAttributes.addFlashAttribute("msg", "delSuccess");
+
+      return "redirect:/article/paging/list";
+   }
+}

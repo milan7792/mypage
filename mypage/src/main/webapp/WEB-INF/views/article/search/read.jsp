@@ -81,7 +81,7 @@
 						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item"> <!-- Message Start -->
 							<div class="media">
-								<img src="dist/img/user8-128x128.jpg" alt="User Avatar"
+								<img src="/mypage/resources/dist/img/user8-128x128.jpg" alt="User Avatar"
 									class="img-size-50 img-circle mr-3">
 								<div class="media-body">
 									<h3 class="dropdown-item-title">
@@ -253,15 +253,15 @@
 							<div class="card-footer">
 								<form role="form" method="post">
 									<input type="hidden" name="article_no" value="${article.article_no}"> 
-									<input type="hidden" name="page" value="${searchCriteria.page}"> 
-									<input type="hidden" name="perPageNum" value="${searchCriteria.perPageNum}">
+									<input type="hidden" name="page" value="${criteria.page}"> 
+									<input type="hidden" name="perPageNum" value="${criteria.perPageNum}">
 									<input type="hidden" name="searchType" value="${searchCriteria.searchType}">
 									<input type="hidden" name="keyword" value="${searchCriteria.keyword}">
 								</form>
 								<button type="submit" class="btn btn-primary listBtn">
 									<i class="fa fa-list"></i> 목록
 								</button>
-								<div class="pull-right">
+								<div class="float-right">
 									<button type="submit" class="btn btn-warning modBtn">
 										<i class="fa fa-edit"></i> 수정
 									</button>
@@ -307,39 +307,38 @@
 	<%@ include file="../../include/plugin_js.jsp"%>
 
 	<!-- jQuery -->
-	<script
-		src="${pageContext.request.contextPath}/resources/plugins/jquery/jquery.min.js"></script>
+	<script src="/mypage/resources/plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
 	<script
-		src="${pageContext.request.contextPath}/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		src="/mypage/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
 	<script
-		src="${pageContext.request.contextPath}/resources/dist/js/adminlte.min.js"></script>
+		src="/mypage/resources/dist/js/adminlte.min.js"></script>
 
 	<script>
-	$(document).ready(function () {
+		$(document).ready(function() {
 
-		var formObj = $("form[role='form']");
-	    console.log(formObj);
+			var formObj = $("form[role='form']");
+			console.log(formObj);
 
-	    $(".modBtn").on("click", function () {
-	        formObj.attr("action", "${path}/article/paging/search/modify");
-	        formObj.attr("method", "get");
-	        formObj.submit();
-	    });
+			$(".modBtn").on("click", function() {
+				formObj.attr("action", "${path}/article/paging/modify");
+				formObj.attr("method", "get");
+				formObj.submit();
+			});
 
-	    $(".delBtn").on("click", function () {
-	        formObj.attr("action", "${path}/article/paging/search/remove");
-	        formObj.submit();
-	    });
+			$(".delBtn").on("click", function() {
+				formObj.attr("action", "${path}/article/paging/remove");
+				formObj.submit();
+			});
 
-	    $(".listBtn").on("click", function () {
-	        formObj.attr("action", "${path}/article/paging/search/list");
-	        formObj.attr("method", "get");
-	        formObj.submit();
-	    });
+			$(".listBtn").on("click", function() {
+				formObj.attr("method", "get");
+				formObj.attr("action", "${path}/article/paging/list");
+				formObj.submit();
+			});
 
-	});
+		});
 	</script>
 </body>
 </html>
