@@ -28,10 +28,38 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+    
+    <beans:bean
+      class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+      <beans:property name="prefix" value="/WEB-INF/views/" />
+      <beans:property name="suffix" value=".jsp" />
+   </beans:bean>
+
+
+   <beans:bean id="multipartResolver"
+      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+      <beans:property name="defaultEncoding" value="UTF-8" />
+      <beans:property name="maxUploadSize" value="104857600" />
+   </beans:bean>
+   
+   <beans:bean id="loginInterceptor" class="com.cameldev.mypage.commons.interceptor.LoginInterceptor"/>
+	<beans:bean id="authInterceptor" class="com.cameldev.mypage.commons.interceptor.AuthInterceptor"/>
+	
+	<interceptors>
+        <interceptor>
+            <mapping path="/user/loginPost"/>
+            <beans:ref bean="loginInterceptor"/>
+        </interceptor>
+        <interceptor>
+            <mapping path="/article/paging/search/write"/>
+            <mapping path="/article/paging/search/modify"/>
+            <mapping path="/article/paging/search/remove"/>
+            <mapping path="/user/info"/>
+            <beans:ref bean="authInterceptor"/>
+        </interceptor>
+    </interceptors>
 
 	<context:component-scan
 		base-package="com.cameldev.mypage" />
-
-
 
 </beans:beans>

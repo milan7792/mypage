@@ -18,5 +18,7 @@ public interface ReplyDAO {
 	List<ReplyVO> listPaging(Integer article_no, Criteria criteria) throws Exception;
 
 	int countReplies(Integer article_no) throws Exception;
+	
+	int getArticleNo(Integer reply_no) throws Exception;
 
 }

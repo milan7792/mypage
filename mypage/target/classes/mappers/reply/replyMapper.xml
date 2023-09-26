@@ -17,6 +17,27 @@
         WHERE article_no = #{article_no}
         ORDER BY reply_no
     </select>
+    
+    <select id="listPaging" resultMap="ReplyResultMap">
+    	SELECT
+        	reply_no
+        	, article_no
+        	, reply_text
+        	, reply_writer
+        	, reg_date
+        	, update_date
+    	FROM tb_reply
+    	WHERE article_no = #{article_no}
+    	ORDER BY reply_no
+    	LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+	</select>
+
+<select id="countReplies" resultType="int">
+    SELECT
+        COUNT(article_no)
+    FROM tb_reply
+    WHERE article_no = #{article_no}
+</select>
 
     <insert id="create">
         INSERT INTO tb_reply (
@@ -60,27 +81,6 @@
         <result property="regDate" column="regdate"/>
         <result property="viewCnt" column="viewcnt"/>
     </resultMap>
-
-	<select id="listPaging" resultMap="ReplyResultMap">
-		SELECT
-		reply_no
-		, article_no
-		, reply_text
-		, reply_writer
-		, reg_date
-		, update_date
-		FROM tb_reply
-		WHERE article_no = #{article_no}
-		ORDER BY reply_no
-		LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
-	</select>
-
-	<select id="countReplies" resultType="int">
-		SELECT
-		COUNT(article_no)
-		FROM tb_reply
-		WHERE article_no = #{article_no}
-	</select>
    
 
 </mapper>

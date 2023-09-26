@@ -258,9 +258,13 @@
 										<c:forEach items="${articles}" var="article">
 											<tr>
 												<td>${article.article_no}</td>
-											<td><a
-													href="${path}/article/paging/search/read${pageMaker.makeQuery(pageMaker.criteria.page)}&article_no=${article.article_no}">
-													${article.title}</a></td>
+												<td>
+													<a href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&article_no=${article.article_no}">
+															${article.title} 
+												</a> 
+												<span class="badge bg-teal"><i class="fas fa-comment"></i> + ${article.replyCnt}</span>
+												</td>
+												
 												<td>${article.writer}</td>
 												<td><fmt:formatDate value="${article.regDate}"
 														pattern="yyyy-MM-dd" /></td>

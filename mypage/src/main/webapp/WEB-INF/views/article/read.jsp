@@ -293,6 +293,7 @@
 				<script src="${pageContext.request.contextPath}/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 				<!-- AdminLTE App -->
 				<script src="${pageContext.request.contextPath}/resources/dist/js/adminlte.min.js"></script>
+				
 				<script>
 					$(document).ready(function () {
 	
@@ -316,6 +317,6 @@
 	
 					});
 				</script>
-		</body>
 
+</body>
 </html>

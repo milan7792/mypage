@@ -57,6 +57,41 @@ public class ReplyController {
         return entity;
     }
     
+  //Reply Paging List
+    @RequestMapping(value = "/{article_no}/{page}", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> listPaging(@PathVariable("article_no") Integer article_no,
+                                                          @PathVariable("page") Integer page) {
+
+        ResponseEntity<Map<String, Object>> entity = null;
+
+        try {
+
+            Criteria criteria = new Criteria();
+            criteria.setPage(page);
+
+            List<ReplyVO> replies = replyService.getRepliesPaging(article_no, criteria);
+            int repliesCount = replyService.countReplies(article_no);
+
+            PageMaker pageMaker = new PageMaker();
+            pageMaker.setCriteria(criteria);
+            pageMaker.setTotalCount(repliesCount);
+
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("replies", replies);
+            map.put("pageMaker", pageMaker);
+
+            entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            entity = new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
+
+        }
+
+        return entity;
+    }
+    
     //Reply Modify
     @RequestMapping(value = "/{reply_no}", method = {RequestMethod.PUT, RequestMethod.PATCH})
     public ResponseEntity<String> update(@PathVariable("reply_no") Integer reply_no, @RequestBody ReplyVO replyVO) {
@@ -86,38 +121,5 @@ public class ReplyController {
         return entity;
     }
     
-	// Reply Paging List
-	@RequestMapping(value = "/{article_no}/{page}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> listPaging(@PathVariable("article_no") Integer article_no,
-			@PathVariable("page") Integer page) {
-
-		ResponseEntity<Map<String, Object>> entity = null;
-
-		try {
-
-			Criteria criteria = new Criteria();
-			criteria.setPage(page);
-
-			List<ReplyVO> replies = replyService.getRepliesPaging(article_no, criteria);
-			int repliesCount = replyService.countReplies(article_no);
-
-			PageMaker pageMaker = new PageMaker();
-			pageMaker.setCriteria(criteria);
-			pageMaker.setTotalCount(repliesCount);
-
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("replies", replies);
-			map.put("pageMaker", pageMaker);
-
-			entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-			entity = new ResponseEntity<Map<String, Object>>(HttpStatus.OK);
-
-		}
-
-		return entity;
-	}
+    
 }

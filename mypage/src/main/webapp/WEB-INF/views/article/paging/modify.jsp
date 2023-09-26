@@ -254,7 +254,7 @@
 													<button type="button" class="btn btn-primary"><i class="fa fa-list"></i> 목록</button>
 													<div class="float-right">
 														<button type="button" class="btn btn-warning cancelBtn"><i class="fa fa-trash"></i> 취소</button>
-														<button type="submit" class="btn btn-success modBtn"><i class="fa fa-save"></i> 수정 저장</button>
+														<button type="submit" class="btn btn-success modBtn"><i class="fa fa-save"></i> 저장</button>
 													</div>
 												</div>
 											</div>

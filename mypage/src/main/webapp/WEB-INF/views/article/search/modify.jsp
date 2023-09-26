@@ -12,9 +12,9 @@
 <title>BU | Starter</title>
 
 <!-- Font Awesome Icons -->
-<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="/mypage/resources/plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="dist/css/adminlte.min.css">
+<link rel="stylesheet" href="/mypage/resources/dist/css/adminlte.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
@@ -269,7 +269,7 @@
 											<i class="fa fa-trash"></i> 취소
 										</button>
 										<button type="submit" class="btn btn-success modBtn">
-											<i class="fa fa-save"></i> 수정 저장
+											<i class="fa fa-save"></i> 저장
 										</button>
 									</div>
 								</div>
@@ -312,12 +312,12 @@
 
 	<!-- jQuery -->
 	<script
-		src="mypage/src/main/webapp/resources/plugins/jquery/jquery.min.js"></script>
+		src="/mypage/resources/src/main/webapp/resources/plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
 	<script
-		src="mypage/src/main/webapp/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		src="/mypage/resources/src/main/webapp/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
-	<script src="mypage/src/main/webapp/resources/dist/js/adminlte.min.js"></script>
+	<script src="/mypage/resources/src/main/webapp/resources/dist/js/adminlte.min.js"></script>
 	
 	<script>
 	$(document).ready(function () {

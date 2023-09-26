@@ -8,5 +8,6 @@
         <typeAlias type="com.cameldev.mypage.domain.ArticleVO" alias="ArticleVO" />
         <typeAlias type="com.cameldev.mypage.domain.ReplyVO" alias="ReplyVO" />
     </typeAliases>
+    
 
 </configuration>

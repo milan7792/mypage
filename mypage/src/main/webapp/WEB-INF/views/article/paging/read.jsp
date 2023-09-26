@@ -250,6 +250,7 @@
 											pattern="yyyy-MM-dd" value="${article.regDate}" /></span>
 								</div>
 							</div>
+							
 							<div class="card-footer">
 								<form role="form" method="post">
 									<input type="hidden" name="article_no"

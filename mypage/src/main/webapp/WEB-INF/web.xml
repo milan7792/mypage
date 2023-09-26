@@ -6,7 +6,9 @@
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+		<param-value>
+		/WEB-INF/spring/root-context.xml
+		</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -43,7 +45,23 @@
         <filter-name>encoding</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
+    
+    <filter>
+    <filter-name>multipartFilter</filter-name>
+    <filter-class>
+        org.springframework.web.multipart.support.MultipartFilter
+    </filter-class>
+    <init-param>
+        <param-name>multipartResolverBeanName</param-name>
+        <param-value>multipartResolver</param-value>
+    </init-param>
+   </filter>
+    
+   <filter-mapping>
+       <filter-name>multipartFilter</filter-name>
+       <url-pattern>*.do</url-pattern>
+   </filter-mapping>
+   
 	<filter>
 		<filter-name>hiddenHttpMethodFilter</filter-name>
 		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter

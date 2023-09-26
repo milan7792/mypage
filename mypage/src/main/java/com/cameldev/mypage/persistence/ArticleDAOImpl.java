@@ -1,6 +1,8 @@
 package com.cameldev.mypage.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -78,5 +80,20 @@ public class ArticleDAOImpl implements ArticleDAO {
 	@Override
 	public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
 	    return sqlSession.selectOne(NAMESPACE + ".countSearchedArticles", searchCriteria);
+	}
+	
+	@Override
+	public void updateReplyCnt(Integer article_no, int amount) throws Exception {
+
+	    Map<String, Object> paramMap = new HashMap<String, Object>();
+	    paramMap.put("article_no", article_no);
+	    paramMap.put("amount", amount);
+
+	    sqlSession.update(NAMESPACE + ".updateReplyCnt",paramMap);
+	}
+	
+	@Override
+	public void updateViewCnt(Integer article_no) throws Exception {
+	    sqlSession.update(NAMESPACE + ".updateViewCnt", article_no);
 	}
 }
