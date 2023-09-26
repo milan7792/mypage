@@ -64,8 +64,8 @@
 					<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 						<a href="#" class="dropdown-item"> <!-- Message Start -->
 							<div class="media">
-								<img src="/mypage/resources/dist/img/user1-128x128.jpg"
-									alt="User Avatar" class="img-size-50 mr-3 img-circle">
+								<img src="dist/img/user1-128x128.jpg" alt="User Avatar"
+									class="img-size-50 mr-3 img-circle">
 								<div class="media-body">
 									<h3 class="dropdown-item-title">
 										Brad Diesel <span class="float-right text-sm text-danger"><i
@@ -81,8 +81,8 @@
 						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item"> <!-- Message Start -->
 							<div class="media">
-								<img src="/mypage/resources/dist/img/user8-128x128.jpg"
-									alt="User Avatar" class="img-size-50 img-circle mr-3">
+								<img src="dist/img/user8-128x128.jpg" alt="User Avatar"
+									class="img-size-50 img-circle mr-3">
 								<div class="media-body">
 									<h3 class="dropdown-item-title">
 										John Pierce <span class="float-right text-sm text-muted"><i
@@ -98,8 +98,8 @@
 						<div class="dropdown-divider"></div>
 						<a href="#" class="dropdown-item"> <!-- Message Start -->
 							<div class="media">
-								<img src="/mypage/resources/dist/img/user3-128x128.jpg"
-									alt="User Avatar" class="img-size-50 img-circle mr-3">
+								<img src="dist/img/user3-128x128.jpg" alt="User Avatar"
+									class="img-size-50 img-circle mr-3">
 								<div class="media-body">
 									<h3 class="dropdown-item-title">
 										Nora Silvester <span class="float-right text-sm text-warning"><i
@@ -153,10 +153,9 @@
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
 			<a href="index3.html" class="brand-link"> <img
-				src="/mypage/resources/dist/img/AdminLTELogo.png"
-				alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-				style="opacity: .8"> <span
-				class="brand-text font-weight-light">AdminLTE 3</span>
+				src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+				class="brand-image img-circle elevation-3" style="opacity: .8">
+				<span class="brand-text font-weight-light">AdminLTE 3</span>
 			</a>
 
 			<!-- Sidebar -->
@@ -164,7 +163,7 @@
 				<!-- Sidebar user panel (optional) -->
 				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 					<div class="image">
-						<img src="/mypage/resources/dist/img/user2-160x160.jpg"
+						<img src="dist/img/user2-160x160.jpg"
 							class="img-circle elevation-2" alt="User Image">
 					</div>
 					<div class="info">
@@ -242,80 +241,61 @@
 							</div>
 							<div class="card-body" style="height: 700px">
 								${article.content}</div>
-
 							<div class="card-footer">
 								<div class="user-block">
 									<img class="img-circle img-bordered-sm"
-										src="/mypage/resources/dist/img/user1-128x128.jpg"
-										alt="user image"> <span class="username"> <a
-										href="#">${article.writer}</a>
+										src="/mypage/reources/dist/img/user1-128x128.jpg" alt="user image">
+									<span class="username"> <a href="#">${article.writer}</a>
 									</span> <span class="description"><fmt:formatDate
 											pattern="yyyy-MM-dd" value="${article.regDate}" /></span>
 								</div>
 							</div>
-
-							<div class="box-footer">
+							
+							<div class="card-footer">
 								<form role="form" method="post">
 									<input type="hidden" name="article_no"
 										value="${article.article_no}"> <input type="hidden"
-										name="page" value="${searchCriteria.page}"> <input
-										type="hidden" name="perPageNum"
-										value="${searchCriteria.perPageNum}"> <input
-										type="hidden" name="searchType"
-										value="${searchCriteria.searchType}"> <input
-										type="hidden" name="keyword" value="${searchCriteria.keyword}">
+										name="page" value="${criteria.page}"> <input
+										type="hidden" name="perPageNum" value="${criteria.perPageNum}">
 								</form>
 								<button type="submit" class="btn btn-primary listBtn">
 									<i class="fa fa-list"></i> 목록
 								</button>
-								<c:if test="${login.userId == article.writer}">
-									<div class="pull-right">
-										<button type="submit" class="btn btn-warning modBtn">
-											<i class="fa fa-edit"></i> 수정
-										</button>
-										<button type="submit" class="btn btn-danger delBtn">
-											<i class="fa fa-trash"></i> 삭제
-										</button>
-									</div>
-								</c:if>
+								<div class="float-right">
+									<button type="submit" class="btn btn-warning modBtn">
+										<i class="fa fa-edit"></i> 수정
+									</button>
+									<button type="submit" class="btn btn-danger delBtn">
+										<i class="fa fa-trash"></i> 삭제
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
-
-					<div class="card">
-						<div class="card-body">
-							<c:if test="${not empty login}">
-								<form class="form-horizontal">
-									<div class="row">
-										<div class="form-group col-sm-8">
-											<input class="form-control input-sm" id="newReplyText"
-												type="text" placeholder="댓글 입력...">
-										</div>
-										<div class="form-group col-sm-2" hidden>
-											<input class="form-control input-sm" id="newReplyWriter"
-												type="text" value="${login.userId}" readonly>
-										</div>
-										<div class="form-group col-sm-2">
-											<button type="button"
-												class="btn btn-primary btn-sm btn-block replyAddBtn">
-												<i class="fa fa-save"></i> 저장
-											</button>
-										</div>
-									</div>
-								</form>
-							</c:if>
-							<c:if test="${empty login}">
-								<a href="${path}/user/login" class="btn btn-default btn-block"
-									role="button"> <i class="fa fa-edit"></i> 로그인 한 사용자만 댓글 등록이
-									가능합니다.
-								</a>
-							</c:if>
-						</div>
-					</div>
-
 					<!-- /.row -->
 				</div>
 				<!-- /.container-fluid -->
+			</div>
+
+			<div class="card-body">
+				<form class="form-horizontal">
+					<div class="row">
+						<div class="form-group col-sm-8">
+							<input class="form-control input-sm" id="newReplyText"
+								type="text" placeholder="댓글 입력...">
+						</div>
+						<div class="form-group col-sm-2">
+							<input class="form-control input-sm" id="newReplyWriter"
+								type="text" placeholder="작성자">
+						</div>
+						<div class="form-group col-sm-2">
+							<button type="button"
+								class="btn btn-primary btn-sm btn-block replyAddBtn">
+								<i class="fa fa-save"></i> 저장
+							</button>
+						</div>
+					</div>
+				</form>
 			</div>
 
 			<div class="card card-primary card-outline">
@@ -331,40 +311,6 @@
 				</div>
 				<%--댓글 목록--%>
 				<div class="card-body repliesDiv"></div>
-				<script>
-				Handlebars.registerHelper("eqReplyWriter", function (reply_writer, block) {
-				    var accum = "";
-				    if (reply_writer === "${login.userId}") {
-				        accum += block.fn();
-				    }
-				    return accum;
-				});
-				</script>
-
-				<script id="replyTemplate" type="text/x-handlebars-template">
-    {{#each.}}
-    <div class="post replyDiv" data-reply_no={{reply_no}}>
-        <div class="user-block">
-            <img class="img-circle img-bordered-sm" src="${path}/dist/img/user1-128x128.jpg" alt="user image">
-            <span class="username">
-                <a href="#">{{reply_writer}}</a>
-				{{#eqReplyWriter reply_writer}}
-                <a href="#" class="float-right btn-box-tool replyDelBtn" data-toggle="modal" data-target="#delModal">
-                    <i class="fa fa-times"> 삭제</i>
-                </a>
-                <a href="#" class="float-right btn-box-tool replyModBtn" data-toggle="modal" data-target="#modModal">
-                    <i class="fa fa-edit"> 수정</i>
-                </a>
- 				{{/eqReplyWriter}}
-            </span>
-            <span class="description">{{prettifyDate reg_date}}</span>
-        </div>
-        <div class="oldReplyText">{{reply_text}}</div>
-        <br/>
-    </div>
-    {{/each}}
-</script>
-
 				<%--댓글 페이징--%>
 				<div class="card-footer">
 					<nav aria-label="Contacts Page Navigation">
@@ -378,28 +324,27 @@
 			<!-- /.content -->
 		</div>
 		<!-- /.content-wrapper -->
-	</div>
 
-	<!-- Control Sidebar -->
-	<aside class="control-sidebar control-sidebar-dark">
-		<!-- Control sidebar content goes here -->
-		<div class="p-3">
-			<h5>Title</h5>
-			<p>Sidebar content</p>
-		</div>
-	</aside>
-	<!-- /.control-sidebar -->
+		<!-- Control Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark">
+			<!-- Control sidebar content goes here -->
+			<div class="p-3">
+				<h5>Title</h5>
+				<p>Sidebar content</p>
+			</div>
+		</aside>
+		<!-- /.control-sidebar -->
 
-	<!-- Main Footer -->
-	<%@ include file="../../include/main_footer.jsp"%>
-	<footer class="main-footer">
-		<!-- To the right -->
-		<div class="float-right d-none d-sm-inline">Anything you want</div>
-		<!-- Default to the left -->
-		<strong>Copyright &copy; 2014-2019 <a
-			href="https://adminlte.io">AdminLTE.io</a>.
-		</strong> All rights reserved.
-	</footer>
+		<!-- Main Footer -->
+		<%@ include file="../../include/main_footer.jsp"%>
+		<footer class="main-footer">
+			<!-- To the right -->
+			<div class="float-right d-none d-sm-inline">Anything you want</div>
+			<!-- Default to the left -->
+			<strong>Copyright &copy; 2014-2019 <a
+				href="https://adminlte.io">AdminLTE.io</a>.
+			</strong> All rights reserved.
+		</footer>
 	</div>
 	<!-- ./wrapper -->
 
@@ -407,13 +352,40 @@
 	<%@ include file="../../include/plugin_js.jsp"%>
 
 	<!-- jQuery -->
-	<script src="${path}/plugins/jquery/jquery.min.js"></script>
+	<script
+		src="mypage/resources/plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
-	<script src="${path}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="mypage/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
-	<script src="${path}/dist/js/adminlte.min.js"></script>
-	<!-- HandleBars JS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+	<script
+		src="mypage/resources/dist/js/adminlte.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+
+			var formObj = $("form[role='form']");
+			console.log(formObj);
+
+			$(".modBtn").on("click", function() {
+				formObj.attr("action", "${path}/article/paging/search/modify");
+				formObj.attr("method", "get");
+				formObj.submit();
+			});
+
+			$(".delBtn").on("click", function() {
+				formObj.attr("action", "${path}/article/paging/search/remove");
+				formObj.submit();
+			});
+
+			$(".listBtn").on("click", function() {
+				formObj.attr("method", "get");
+				formObj.attr("action", "${path}/article/paging/search/list");
+				formObj.submit();
+			});
+
+		});	
+	</script>
 	
 	<script id="replyTemplate" type="text/x-handlebars-template">
     {{#each.}}
@@ -650,6 +622,6 @@
 	        });
 	    });
 	});
-	</script>	
+	</script>
 </body>
 </html>
