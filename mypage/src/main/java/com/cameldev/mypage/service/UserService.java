@@ -1,5 +1,7 @@
 package com.cameldev.mypage.service;
 
+import java.sql.Date;
+
 import com.cameldev.mypage.domain.LoginDTO;
 import com.cameldev.mypage.domain.UserVO;
 
@@ -10,5 +12,9 @@ public interface UserService {
     
     // 로그인 처리
     UserVO login(LoginDTO loginDTO) throws Exception;
+    
+    void keepLogin(String userId, String sessionId, Date next) throws Exception;
+
+    UserVO checkLoginBefore(String value) throws Exception;
 
 }

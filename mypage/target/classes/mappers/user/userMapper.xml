@@ -18,5 +18,39 @@
             , #{userEmail}
         )
     </insert>
+    
+    <resultMap id="userVOResultMap" type="UserVO">
+        <id property="userId" column="user_id"/>
+        <result property="userPw" column="user_pw"/>
+        <result property="userName" column="user_name"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userJoinDate" column="user_join_date"/>
+        <result property="userLoginDate" column="user_login_date"/>
+        <result property="userSignature" column="user_signature"/>
+        <result property="userImg" column="user_img"/>
+        <result property="userPoint" column="user_point"/>
+    </resultMap> 
+    
+    <select id="login" resultMap="userVOResultMap">
+    	SELECT
+    	  *
+    	FROM tb_user
+    	WHERE user_id = #{userId}
+    </select>
+    
+
+	<update id="keepLogin">
+		UPDATE tb_user
+		SET session_key = #{sessionId}
+		, session_limit = #{sessionLimit}
+		WHERE user_id = #{userId}
+	</update>
+
+	 <select id="checkUserWithSessionKey" resultMap="userVOResultMap">
+		SELECT
+		*
+		FROM tb_user
+		WHERE session_key = #{value}
+	</select> 
 
 </mapper>

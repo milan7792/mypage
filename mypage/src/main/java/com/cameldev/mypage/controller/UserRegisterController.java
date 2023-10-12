@@ -28,7 +28,7 @@ public class UserRegisterController {
         return "/user/register";
     }
 
-    // 회원가입 처리
+    // 회원가입 처리 (userPw를 암호화)
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerPOST(UserVO userVO, RedirectAttributes redirectAttributes) throws Exception {
 
@@ -39,5 +39,5 @@ public class UserRegisterController {
 
         return "redirect:/user/login";
     }
-
+    
 }

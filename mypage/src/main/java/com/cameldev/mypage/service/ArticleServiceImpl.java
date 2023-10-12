@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,21 +15,41 @@ import com.cameldev.mypage.commons.paging.Criteria;
 import com.cameldev.mypage.commons.paging.SearchCriteria;
 import com.cameldev.mypage.domain.ArticleVO;
 import com.cameldev.mypage.persistence.ArticleDAO;
+import com.cameldev.mypage.persistence.ArticleFileDAO;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
 	private final ArticleDAO articleDAO;
+	private final ArticleFileDAO articleFileDAO;
+	private Logger logger;
 
 	@Inject
-	public ArticleServiceImpl(ArticleDAO articleDAO) {
+	public ArticleServiceImpl(ArticleDAO articleDAO, ArticleFileDAO articleFileDAO) {
 		this.articleDAO = articleDAO;
+		this.articleFileDAO = articleFileDAO;
 	}
 
+	@Transactional
 	@Override
 	public void create(ArticleVO articleVO) throws Exception {
+		String[] files = articleVO.getFiles();
+		
+		if (files == null) {
+			
+			articleDAO.create(articleVO);
+			return;
+		}
+		articleVO.setFileCnt(files.length);
+		
 		articleDAO.create(articleVO);
-	}
+		logger.info("Create - "+articleVO.toString());
+		Integer article_no = articleVO.getArticle_no();
+		for (String fileName : files) {
+			articleFileDAO.addAttach(fileName, article_no);
+		}
+		
+	}	 
 	
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
@@ -35,13 +58,33 @@ public class ArticleServiceImpl implements ArticleService {
 		return articleDAO.read(article_no);
 	}
 
+	@Transactional
 	@Override
 	public void update(ArticleVO articleVO) throws Exception {
-		articleDAO.update(articleVO);
-	}
+		
+		 int article_no = articleVO.getArticle_no();
+			articleFileDAO.deleteAllAttach(article_no); 
 
+	        String[] files = articleVO.getFiles();
+	        if (files == null) {
+	        	articleVO.setFileCnt(0);
+	            articleDAO.update(articleVO);
+	            return;
+	        }
+	        
+
+	        articleVO.setFileCnt(files.length);
+	        articleDAO.update(articleVO);
+	        for (String fileName : files) {
+				articleFileDAO.replaceAttach(fileName, article_no);
+	        }
+	}
+	
+	// 게시글 삭제 처리
+	@Transactional
 	@Override
 	public void delete(Integer article_no) throws Exception {
+		articleFileDAO.deleteAllAttach(article_no);
 		articleDAO.delete(article_no);
 	}
 

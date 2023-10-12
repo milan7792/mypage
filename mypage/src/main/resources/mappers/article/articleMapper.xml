@@ -5,21 +5,17 @@
 
 <mapper namespace="com.cameldev.mypage.mappers.article.ArticleMapper">
 
-    <insert id="create">
+    <insert id="create" useGeneratedKeys="true" keyProperty="article_no">
         INSERT INTO tb_article (
-            article_no
-            , title
+            title
             , content
             , writer
-            , regdate
-            , viewcnt
+            , file_cnt
         ) VALUES (
-            #{article_no}
-            , #{title}
+            #{title}
             , #{content}
             , #{writer}
-            , #{regDate}
-            , #{viewCnt}
+            , #{fileCnt}
         )
     </insert>
 
@@ -31,6 +27,9 @@
             , writer
             , regdate
             , viewcnt
+            , reply_cnt
+            , file_cnt
+            
         FROM
             tb_article
         WHERE article_no = #{article_no}
@@ -71,7 +70,9 @@
             content,
             writer,
             regdate,
-            viewcnt
+            viewcnt,
+            reply_cnt,
+            file_cnt
         FROM tb_article
         WHERE article_no > 0
         ORDER BY article_no DESC, regdate DESC
@@ -86,7 +87,9 @@
         content,
         writer,
         regdate,
-        viewcnt
+        viewcnt,
+        reply_cnt,
+        file_cnt
     FROM tb_article
     WHERE article_no > 0
     ORDER BY article_no DESC, regdate DESC
@@ -102,7 +105,9 @@
         content,
         writer,
         regdate,
-        viewcnt
+        viewcnt,
+        reply_cnt,
+        file_cnt
     FROM tb_article
     WHERE article_no > 0
     ORDER BY article_no DESC, regdate DESC
@@ -127,7 +132,9 @@
         content,
         writer,
         regdate,
-        viewcnt
+        viewcnt,
+        reply_cnt,
+        file_cnt
     FROM tb_article
     WHERE article_no > 0
     ]]>

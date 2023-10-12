@@ -39,12 +39,14 @@
    <beans:bean id="multipartResolver"
       class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
       <beans:property name="defaultEncoding" value="UTF-8" />
-      <beans:property name="maxUploadSize" value="104857600" />
+      <beans:property name="maxUploadSize" value="10485760" />
    </beans:bean>
    
-   <beans:bean id="loginInterceptor" class="com.cameldev.mypage.commons.interceptor.LoginInterceptor"/>
-	<beans:bean id="authInterceptor" class="com.cameldev.mypage.commons.interceptor.AuthInterceptor"/>
-	
+	<beans:bean id="loginInterceptor" class="com.cameldev.mypage.commons.interceptor.LoginInterceptor"/>
+			<beans:bean id="authInterceptor" class="com.cameldev.mypage.commons.interceptor.AuthInterceptor"/>
+			<beans:bean id="rememberMeInterceptor" class="com.cameldev.mypage.commons.interceptor.RememberMeInterceptor"/>
+			<beans:bean id="loginAfterInterceptor" class="com.cameldev.mypage.commons.interceptor.LoginAfterInterceptor"/>
+			
 	<interceptors>
         <interceptor>
             <mapping path="/user/loginPost"/>
@@ -56,6 +58,15 @@
             <mapping path="/article/paging/search/remove"/>
             <mapping path="/user/info"/>
             <beans:ref bean="authInterceptor"/>
+        </interceptor>
+        <interceptor>
+            <mapping path="/**/"/>
+            <beans:ref bean="rememberMeInterceptor"/>
+        </interceptor>
+        <interceptor>
+            <mapping path="/user/login"/>
+            <mapping path="/user/register"/>
+            <beans:ref bean="loginAfterInterceptor"/>
         </interceptor>
     </interceptors>
 

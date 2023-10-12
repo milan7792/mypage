@@ -14,11 +14,40 @@ public class ArticleVO {
 
 	private String writer;
 
-	private Timestamp regDate;
+	private Date regDate;
 
 	private int viewCnt;
 	
 	private int replyCnt;
+	
+	private String[] files;
+	
+	private int fileCnt;
+
+	public String[] getFiles() {
+		return files;
+	}
+
+	public void setFiles(String[] files) {
+		this.files = files;
+		setFileCnt(files.length);
+	}
+
+	public int getFileCnt() {
+		return fileCnt;
+	}
+
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+
+	public Date getRegDate() {
+		return regDate;
+	}
+
+	public void setFileCnt(int fileCnt) {
+		this.fileCnt = fileCnt;
+	}
 
 	public Integer getArticle_no() {
 		return article_no;
@@ -52,14 +81,6 @@ public class ArticleVO {
 		this.writer = writer;
 	}
 
-	public Timestamp getRegDate() {
-		return regDate;
-	}
-
-	public void setRegDate(Timestamp regDate) {
-		this.regDate = regDate;
-	}
-
 	public int getViewCnt() {
 		return viewCnt;
 	}
@@ -78,13 +99,9 @@ public class ArticleVO {
 
 	@Override
 	public String toString() {
-		return "ArticleVO [article_no=" + article_no + 
-										", title="+ title +
-										", content="+ content + 
-										", writer="+ writer + 
-										", regDate="+ regDate + 
-										", viewCnt="+ viewCnt + 
-										", replyCnt="+ replyCnt + "]";
+		return "ArticleVO [article_no=" + article_no + ", title=" + title + ", content=" + content + ", writer="
+				+ writer + ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", replyCnt=" + replyCnt + ", files="
+				+ Arrays.toString(files) + ", fileCnt=" + fileCnt + "]";
 	}
 
 } 

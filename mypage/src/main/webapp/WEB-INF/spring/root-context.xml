@@ -41,6 +41,13 @@
     	<property name="dataSource" ref="dataSource"/>
 	</bean>
 
+	<!-- 파일 업로드 경로를 설정 -->
+	<bean id="uploadPath" class="java.lang.String">
+		<constructor-arg
+			value="C:\\Users\\cameldev\\eclipse-workspace\\mypage\\src\\main\\webapp\\resources\\upload">
+		</constructor-arg>
+	</bean>
+
 	<tx:annotation-driven/>
 
 	<context:component-scan

@@ -9,11 +9,16 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <title>AdminLTE 3 | Starter</title>
-
+</head>
+<body>
+  <!-- lightbox css --!>
+  <link rel="stylesheet" href="${path}/plugins/ekko-lightbox/ekko-lightbox.css">
+  
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="${path}/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="${path}/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
+
+</body> 

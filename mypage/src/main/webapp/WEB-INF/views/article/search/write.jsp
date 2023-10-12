@@ -21,6 +21,14 @@
 	rel="stylesheet">
 </head>
 
+<style>
+    .fileDrop {
+        width: 100%;
+        height: 200px;
+        border: 2px dotted #0b58a2;
+    }
+</style>
+
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
 
@@ -252,6 +260,46 @@
 										<label for="writer">작성자</label> <input class="form-control"
 											id="writer" name="writer" value="${login.userId}" readonly>
 									</div>
+									
+									<%--첨부파일 영역 추가--%>
+									<div class="form-group">
+										<div class="fileDrop">
+											<br/>
+											<br/>
+											<br/> 
+											<br/>
+											<p class="text-center"><i class="fa fa-paperclip"></i> 첨부파일을 드래그해주세요.</p>
+										</div>
+									</div>
+									
+									<%--첨부파일 영역 추가--%>
+									<div class="card-footer">
+										<ul class="mailbox-attachments clearfix uploadedList"></ul>
+									</div>
+									
+									<%--첨부파일 하나의 영역--%>
+									<%--이미지--%>
+									<script id="templatePhotoAttach" type="text/x-handlebars-template">
+    									<li>
+        									<span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
+        									<div class="mailbox-attachment-info">
+            									<a href="{{getLink}}" class="mailbox-attachment-name" data-lightbox="uploadImages"><i class="fas fa-camera"></i> {{file_name}}</a>            									
+												<a href="{{file_name}}" class="btn btn-default btn-xs float-right delBtn"><i class="far fa-trash-alt"></i></a>
+        									</div>
+   			 							</li>
+										</script>
+										
+									<%--일반 파일--%>
+									<script id="templateFileAttach" type="text/x-handlebars-template">
+    									<li>
+        									<span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
+        									<div class="mailbox-attachment-info">
+            									<a href="{{getLink}}" class="mailbox-attachment-name"><i class="fas fa-paperclip"></i> {{file_name}}</a>         									
+												<a href="{{file_name}}" class="btn btn-default btn-xs float-right delBtn"><i class="far fa-trash-alt"></i></a>
+        									</div>
+    									</li>
+									</script>
+									
 								</div>
 								<div class="card-footer">
 									<button type="button" class="btn btn-primary">
@@ -315,5 +363,81 @@
 			alert("게시글 삭제가 완료되었습니다.");
 		}
 	</script>
+	
+	<script>
+    /*====================================================게시판 첨부파일 업로드 관련======================================*/
+    $(document).ready(function () {
+        var fileDropDiv = $(".fileDrop");
+        var templatePhotoAttach = Handlebars.compile($("#templatePhotoAttach").html());
+        var templateFileAttach = Handlebars.compile($("#templateFileAttach").html());
+        // 전체 페이지 파일 끌어 놓기 기본 이벤트 방지 : 지정된 영역외에 파일 드래그 드랍시 페이지 이동방지
+        $(".content-wrapper").on("dragenter dragover drop", function (event) {
+            event.preventDefault();
+        });
+        // 파일 끌어 놓기 기본 이벤트 방지
+        fileDropDiv.on("dragenter dragover", function (event) {
+            event.preventDefault();
+        });
+        // 파일 드랍 이벤트 : 파일 전송 처리, 파일 화면 출력
+        fileDropDiv.on("drop", function (event) {
+            event.preventDefault();
+            var files = event.originalEvent.dataTransfer.files;
+            var file = files[0];
+            var formData = new FormData();
+            formData.append("file", file);
+            $.ajax({
+                url: "/mypage/file/upload",
+                data: formData,
+                dataType: "text",
+                processData: false,
+                contentType: false,
+                type: "POST",
+                success: function (data) {
+                    // 파일정보 가공
+                    var fileInfo = getFileInfo(data);
+                    // 이미지 파일일 경우
+                    if (data.substr(12, 2) == "s_") {
+                    	console.log("This is Image");
+                        var html = templatePhotoAttach(fileInfo);
+                    // 이미지 파일이 아닐 경우
+                    } else {
+                        html = templateFileAttach(fileInfo);
+                    }
+                    $(".uploadedList").append(html);
+                }
+            });
+        });
+        // 글 저장 버튼 클릭 이벤트 : 파일명 DB 저장 처리
+        $("#writeForm").submit(function (event) {
+            event.preventDefault();
+            var that = $(this);
+            var str = "";
+            $(".uploadedList .delBtn").each(function (index) {
+                str += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("href")+"'>"
+            });
+            that.append(str);
+            that.get(0).submit();
+        });
+        // 파일 삭제 버튼 클릭 이벤트 : 파일삭제, 파일명 DB 삭제 처리
+        $(document).on("click", ".delBtn", function (event) {
+            event.preventDefault();
+            var that = $(this);
+            $.ajax({
+                url: "/mypage/file/delete",
+                type: "post",
+                data: {fileName:$(this).attr("href")},
+                dataType: "text",
+                success: function (result) {
+                    if (result == "DELETED") {
+                        alert("삭제되었습니다.");
+                        that.parents("li").remove();
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript" src="${path}/resources/dist/js/upload.js"></script>
 </body>
 </html>

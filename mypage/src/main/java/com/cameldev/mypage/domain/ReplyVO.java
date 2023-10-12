@@ -10,6 +10,15 @@ public class ReplyVO {
 	private String reply_writer;
 	private Date reg_date;
 	private Date update_date;
+	private UserVO userVO;
+
+	public UserVO getUserVO() {
+		return userVO;
+	}
+
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
+	}
 
 	@Override
 	public String toString() {

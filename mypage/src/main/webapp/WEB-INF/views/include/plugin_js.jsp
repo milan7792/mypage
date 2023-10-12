@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<!-- REQUIRED SCRIPTS -->
 
 	<!-- jQuery -->
 	<script src="/mypage/resources/plugins/jquery/jquery.min.js"></script>
@@ -19,5 +18,7 @@
 	<!-- HandleBars JS -->	
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+	<!-- lightbox js -->
+	<script src="${path}/plugins/ekko-lightbox/ekko-lightbox.js"></script>
 </body>
 </html>
