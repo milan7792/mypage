@@ -96,12 +96,38 @@ public class ArticleVO {
 	public void setReplyCnt(int replyCnt) {
 		this.replyCnt = replyCnt;
 	}
+	
+	private String writerImg;
+    
+	private UserVO userVO;
+
+	public UserVO getUserVO() {
+		return userVO;
+	}
+
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
+	}
+
+	public String getWriterImg() {
+		return writerImg;
+	}
+
+	public void setWriterImg(String writerImg) {
+		this.writerImg = writerImg;
+	}
+
+	public void setWriterImg(String writerImg, UserVO userVO) {
+		writerImg = userVO.getUserImg();
+		this.writerImg = writerImg;
+	}
 
 	@Override
 	public String toString() {
 		return "ArticleVO [article_no=" + article_no + ", title=" + title + ", content=" + content + ", writer="
 				+ writer + ", regDate=" + regDate + ", viewCnt=" + viewCnt + ", replyCnt=" + replyCnt + ", files="
-				+ Arrays.toString(files) + ", fileCnt=" + fileCnt + "]";
+				+ Arrays.toString(files) + ", fileCnt=" + fileCnt + ", writerImg=" + writerImg + ", userVO=" + userVO
+				+ "]";
 	}
 
 } 

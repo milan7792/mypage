@@ -155,6 +155,22 @@
     <include refid="search"/>
 </select>
 
+<!--회원 프로필 이미지 변경-->
+<update id="updateWriterImg" >
+  UPDATE tb_article
+  SET
+  writerImg = (SELECT user_img FROM tb_user WHERE user_id = #{writer})
+  WHERE article_no = #{article_no}
+</update>
+
+<select id="userBoardList" resultType="ArticleVO">
+  SELECT
+  *
+  FROM tb_article
+  WHERE writer = #{userId}
+  ORDER BY article_no DESC, regdate DESC
+</select>
+
 <sql id="search">
     <if test="searchType != null">
         <if test="searchType == 't'.toString()">
@@ -195,6 +211,23 @@
         <result property="writer" column="writer" />
         <result property="regDate" column="regdate" />
         <result property="viewCnt" column="viewcnt" />
+        <result property="replyCnt" column="reply_cnt" />
+  		<result property="fileCnt" column="file_cnt" />
+  		<result property="writerImg" column="writerImg" />
+  		<association property="userVO" resultMap="userVOResultMap"/>   
     </resultMap>
+    
+    <!-- 추가 -->
+	<resultMap id="userVOResultMap" type="UserVO">
+  		<id property="userId" column="user_id"/>
+  		<result property="userPw" column="user_pw"/>
+  		<result property="userName" column="user_name"/>
+  		<result property="userEmail" column="user_email"/>
+  		<result property="userJoinDate" column="user_join_date"/>
+  		<result property="userLoginDate" column="user_login_date"/>
+  		<result property="userSignature" column="user_signature"/>
+  		<result property="userImg" column="user_img"/>
+  		<result property="userPoint" column="user_point"/>
+	</resultMap>
 
 </mapper>

@@ -64,4 +64,10 @@ public class ReplyDAOImpl implements ReplyDAO {
         return sqlSession.selectOne(NAMESPACE + ".getArticleNo", reply_no);
     }
     
+    // 회원이 작성한 댓글 목록
+    @Override
+    public List<ReplyVO> userReplies(String userId) throws Exception {
+    	return sqlSession.selectList(NAMESPACE + ".userReplies", userId);
+    }
+    
 }

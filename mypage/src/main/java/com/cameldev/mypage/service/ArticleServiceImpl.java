@@ -33,18 +33,22 @@ public class ArticleServiceImpl implements ArticleService {
 	@Transactional
 	@Override
 	public void create(ArticleVO articleVO) throws Exception {
+		
 		String[] files = articleVO.getFiles();
 		
 		if (files == null) {
 			
 			articleDAO.create(articleVO);
+			articleDAO.updateWriterImg(articleVO); // 추가
 			return;
 		}
 		articleVO.setFileCnt(files.length);
 		
 		articleDAO.create(articleVO);
+		articleDAO.updateWriterImg(articleVO);   //추가
 		logger.info("Create - "+articleVO.toString());
 		Integer article_no = articleVO.getArticle_no();
+		
 		for (String fileName : files) {
 			articleFileDAO.addAttach(fileName, article_no);
 		}
@@ -63,6 +67,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public void update(ArticleVO articleVO) throws Exception {
 		
 		 int article_no = articleVO.getArticle_no();
+		 
 			articleFileDAO.deleteAllAttach(article_no); 
 
 	        String[] files = articleVO.getFiles();
@@ -111,5 +116,11 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public int countSearchedArticles(SearchCriteria searchCriteria) throws Exception {
 	    return articleDAO.countSearchedArticles(searchCriteria);
+	}
+	
+	// 회원이 작성한 게시글 목록
+	@Override
+	public List<ArticleVO> userBoardList(String uid) throws Exception {
+		return articleDAO.userBoardList(uid);
 	}
 }

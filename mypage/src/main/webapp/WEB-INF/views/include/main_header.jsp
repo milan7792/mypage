@@ -30,12 +30,12 @@
                 <c:if test="${not empty login}">
                 <li class="nav-item dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="${path}/dist/img/default-user-image.jpg" class="user-image" alt="User Image">
+                        <img src="${path}/dist/img/user-image.jpg" class="user-image" alt="User Image">
                         <span class="hidden-xs">${login.userName}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">
-                            <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
+                            <img src="${path}/dist/img/user-image.jpg" class="img-circle" alt="User Image">
                             <p>
                                 <small>
                                     가입일자 : <fmt:formatDate value="${login.userJoinDate}" pattern="yyyy-MM-dd"/>
@@ -61,12 +61,12 @@
                 <c:if test="${empty login}">
                 <li class="nav-item dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="${path}/dist/img/default-user-image.jpg" class="user-image" alt="User Image">
+                        <img src="${path}/dist/img/unknown.png" class="user-image" alt="Unknown Image">
                         <span class="hidden-xs">회원가입 또는 로그인</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">
-                            <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
+                            <img src="${path}/dist/img/king.jpg" class="img-circle" alt="Request Image">
                             <p>
                                 <b>회원가입 또는 로그인해주세요</b>
                                 <small></small>

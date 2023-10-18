@@ -12,53 +12,51 @@ import java.util.Map;
 public class ArticleFileDAOImpl implements ArticleFileDAO {
 
     private static final String NAMESPACE = "com.cameldev.mypage.mappers.upload.ArticleFileMapper";
-    
-    private SqlSession sqlSession;
-    
     @Inject
-    public ArticleFileDAOImpl(SqlSession sqlSession) {
-    	this.sqlSession = sqlSession;
-    }
-    
+    private SqlSession sqlSession;
+
     // 게시글 첨부파일 추가
     @Override
     public void addAttach(String fileName, Integer article_no) throws Exception {
-        sqlSession.insert(NAMESPACE + ".addFile", fileName);
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("fileName", fileName);
+        paramMap.put("article_no", article_no);
+        sqlSession.insert(NAMESPACE + ".addAttach", paramMap);
     }
 
     // 게시글 첨부파일 조회
-	@Override
-	public List<String> getAttach(Integer artice_no) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	// 게시글 첨부파일 수정
-	@Override
-	public void replaceAttach(String fileName, Integer article_no) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	// 게시글 첨부파일 삭제
-	@Override
-	public void deleteAttach(String fullName) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	// 게시글 첨부파일 일괄 삭제
-	@Override
-	public void deleteAllAttach(Integer article_no) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public List<String> getAttach(Integer article_no) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".getAttach", article_no);
+    }
 
-	// 특정 게시글의 첨부파일 갯수 갱신
-	@Override
-	public void updateAttachCnt(Integer article_no) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+    // 게시글 첨부파일 수정
+    @Override
+    public void replaceAttach(String fileName, Integer article_no) throws Exception {
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("fileName", fileName);
+        paramMap.put("article_no", article_no);
+        sqlSession.insert(NAMESPACE + ".replaceAttach", paramMap);
+    }
+
+    // 게시글 첨부파일 삭제 ★
+    @Override
+    public void deleteAttach(String fileName) throws Exception {
+        sqlSession.delete(NAMESPACE + ".deleteAttach", fileName);
+    }
+
+    // 게시글 첨부파일 일괄 삭제
+    @Override
+    public void deleteAllAttach(Integer article_no) throws Exception {
+    	Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("article_no", article_no);
+        sqlSession.delete(NAMESPACE + ".deleteAllAttach", article_no);
+    }
+
+    // 특정 게시글의 첨부파일 갯수 갱신 ★
+    @Override
+    public void updateAttachCnt(Integer article_no) throws Exception {
+        sqlSession.update(NAMESPACE + ".updateAttachCnt", article_no);
+    }
    
 }

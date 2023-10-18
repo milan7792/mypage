@@ -17,30 +17,17 @@
         WHERE article_no = #{article_no}
         ORDER BY reply_no
     </select>
-    
-    <select id="listPaging" resultMap="ReplyResultMap">
-    	SELECT
-        	reply_no
-        	, article_no
-        	, reply_text
-        	, reply_writer
-        	, reg_date
-        	, update_date
-        	, user_img
-    	FROM tb_reply
-    	INNER JOIN tb_user ON user_id = reply_writer
-    	WHERE article_no = #{article_no}
-    	ORDER BY reply_no DESC
-    	LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
+	
+	<select id="listPaging" resultMap="ReplyResultMap">
+	    SELECT
+	        *
+	    FROM tb_reply
+	    INNER JOIN tb_user ON user_id = reply_writer
+	    WHERE article_no = #{article_no}
+	    ORDER BY reply_no DESC
+	    LIMIT #{criteria.pageStart}, #{criteria.perPageNum}
 	</select>
-
-<select id="countReplies" resultType="int">
-    SELECT
-        COUNT(article_no)
-    FROM tb_reply
-    WHERE article_no = #{article_no}
-</select>
-
+	
     <insert id="create">
         INSERT INTO tb_reply (
             article_no
@@ -66,6 +53,35 @@
         WHERE reply_no = #{reply_no}
     </delete>
     
+    
+
+	<select id="countReplies" resultType="int">
+	    SELECT
+	        COUNT(article_no)
+	    FROM tb_reply
+	    WHERE article_no = #{article_no}
+	</select>
+	
+	<select id="getArticleNo" resultType="int">
+	    SELECT
+	        article_no
+	    FROM tb_reply
+	    WHERE reply_no = #{reply_no}
+	</select>
+	
+	<!--회원이 작성한 댓글 목록-->
+    <select id="userReplies" resultMap="ReplyResultMap">
+        SELECT
+            r.reply_text
+            , r.reg_date
+            , a.title
+            , a.article_no
+        FROM tb_reply r
+            LEFT OUTER JOIN tb_article a
+                ON a.article_no = r.article_no
+        WHERE reply_writer = #{userId}
+    </select>
+
     <resultMap id="ReplyResultMap" type="ReplyVO">
         <id property="reply_no" column="reply_no"/>
         <result property="article_no" column="article_no"/>
@@ -74,18 +90,23 @@
         <result property="reg_date" column="reg_date"/>
         <result property="update_date" column="update_date"/>
         <association property="userVO" resultMap="userVOResultMap"/>
+        <association property="articleVO" resultMap="ArticleResultMap"/>
     </resultMap>
 
     <resultMap id="ArticleResultMap" type="ArticleVO">
         <id property="article_no" column="article_no"/>
-        <result property="title" column="title"/>
-        <result property="content" column="content"/>
-        <result property="writer" column="writer"/>
-        <result property="regDate" column="regdate"/>
-        <result property="viewCnt" column="viewcnt"/>
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="writer" column="writer" />
+        <result property="regDate" column="regdate" />
+        <result property="viewCnt" column="viewcnt" />
+        <result property="replyCnt" column="reply_cnt" />
+        <result property="fileCnt" column="file_cnt" />
+        <result property="writerImg" column="writerImg" />
+        <association property="userVO" resultMap="userVOResultMap"/>
     </resultMap>
-    
-    <resultMap id="userVOResultMap" type="UserVO">
+   
+	<resultMap id="userVOResultMap" type="UserVO">
         <id property="userId" column="user_id"/>
         <result property="userPw" column="user_pw"/>
         <result property="userName" column="user_name"/>
@@ -95,6 +116,6 @@
         <result property="userSignature" column="user_signature"/>
         <result property="userImg" column="user_img"/>
         <result property="userPoint" column="user_point"/>
-    </resultMap> 
-   
+    </resultMap>
+    
 </mapper>

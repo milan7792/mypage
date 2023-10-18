@@ -25,16 +25,16 @@ public class ReplyServiceImpl implements ReplyService {
         this.articleDAO = articleDAO;
     }
     
- // 댓글 등록
-    @Transactional // 트랜잭션 처리
+    // 댓글 등록
+    @Transactional 
     @Override
     public void addReply(ReplyVO replyVO) throws Exception {
         replyDAO.create(replyVO); // 댓글 등록
         articleDAO.updateReplyCnt(replyVO.getArticle_no(), 1); // 댓글 갯수 증가
     }
     
- // 댓글 삭제
-    @Transactional // 트랜잭션 처리
+    // 댓글 삭제
+    @Transactional 
     @Override
     public void removeReply(Integer reply_no) throws Exception {
         int article_no = replyDAO.getArticleNo(reply_no); // 댓글의 게시물 번호 조회
@@ -70,6 +70,12 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public int countReplies(Integer article_no) throws Exception {
         return replyDAO.countReplies(article_no);
+    }
+    
+    // 회원이 작성한 댓글 목록
+    @Override
+    public List<ReplyVO> userReplies(String userId) throws Exception {
+    	return replyDAO.userReplies(userId);
     }
 
 }

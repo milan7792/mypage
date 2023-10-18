@@ -51,6 +51,45 @@
 		*
 		FROM tb_user
 		WHERE session_key = #{value}
-	</select> 
+	</select>
+	
+	<!--회원 정보 수정-->
+    <update id="updateUser">
+        UPDATE tb_user
+        SET
+            user_name = #{userName}
+            , user_email =  #{userEmail}
+        WHERE user_id = #{userId}
+    </update>
+
+    <!--회원 비밀번호-->
+    <select id="getUser" resultMap="userVOResultMap">
+        SELECT *
+        FROM tb_user
+        WHERE user_id = #{userId}
+    </select>
+
+    <!--회원비밀번호 수정-->
+    <update id="updatePw">
+        UPDATE tb_user
+        SET
+            user_pw = #{userPw}
+        WHERE user_id = #{userId}
+    </update>
+
+    <!--회원 프로필 이미지 변경-->
+    <update id="updateUimage" >
+        UPDATE tb_user
+        SET
+            user_img = #{userImg}
+        WHERE user_id = #{userId}
+    </update>
+    
+    <!--로그인 일자 갱신-->
+	<update id="updateLoginDate">
+  		UPDATE tb_user
+  		SET user_login_date = NOW()
+  		WHERE user_id = #{userId}
+	</update>
 
 </mapper>

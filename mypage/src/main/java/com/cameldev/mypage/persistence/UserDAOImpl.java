@@ -52,5 +52,38 @@ public class UserDAOImpl implements UserDAO {
     public UserVO checkUserWithSessionKey(String value) throws Exception {
       return sqlSession.selectOne(NAMESPACE + ".checkUserWithSessionKey", value);
     }
+    
+ // 회원 비밀번호
+    @Override
+    public UserVO getUser(String userId) throws Exception {
+    	return sqlSession.selectOne(NAMESPACE + ".getUser", userId);
+    }
+
+    // 회원정보 수정처리
+    @Override
+    public void updateUser(UserVO userVO) throws Exception {
+    	sqlSession.update(NAMESPACE + ".updateUser", userVO);
+    }
+
+    // 회원비밀번호 수정처리
+    @Override
+    public void updatePw(UserVO userVO) throws Exception {
+    	sqlSession.update(NAMESPACE + ".updatePw", userVO);
+    }
+
+    // 회원 프로필 사진 수정
+    @Override
+    public void updateUimage(String userId, String userImg) throws Exception {
+    	Map<String, Object> paramMap = new HashMap<String, Object>();
+    	paramMap.put("userId", userId);
+    	paramMap.put("userImg", userImg);
+    	sqlSession.update(NAMESPACE + ".updateUimage", paramMap);
+    }
+    
+    // 로그인 일자 갱신
+    @Override
+    public void updateLoginDate(String userId) throws Exception {
+    	sqlSession.update(NAMESPACE + ".updateLoginDate", userId);
+    }
 
 }

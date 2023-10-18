@@ -33,30 +33,7 @@
 
 		<!-- Navbar -->
 		<%@ include file="../../include/main_header.jsp"%>
-		<nav
-			class="main-header navbar navbar-expand navbar-white navbar-light">
-			<!-- Left navbar links -->
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
-					href="#" role="button"><i class="fas fa-bars"></i></a></li>
-				<li class="nav-item d-none d-sm-inline-block"><a
-					href="index3.html" class="nav-link">Home</a></li>
-				<li class="nav-item d-none d-sm-inline-block"><a href="#"
-					class="nav-link">Contact</a></li>
-			</ul>
-
-			<!-- SEARCH FORM -->
-			<form class="form-inline ml-3">
-				<div class="input-group input-group-sm">
-					<input class="form-control form-control-navbar" type="search"
-						placeholder="Search" aria-label="Search">
-					<div class="input-group-append">
-						<button class="btn btn-navbar" type="submit">
-							<i class="fas fa-search"></i>
-						</button>
-					</div>
-				</div>
-			</form>
+		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
 
 			<!-- Right navbar links -->
 			<ul class="navbar-nav ml-auto">
@@ -218,13 +195,13 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0 text-dark">List Page</h1>
+							<h1 class="m-0 text-dark">List Paging Search Page</h1>
 						</div>
 						<!-- /.col -->
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
 								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">Starter Page</li>
+								<li class="breadcrumb-item active">List Paging Search Page</li>
 							</ol>
 						</div>
 						<!-- /.col -->
@@ -262,7 +239,7 @@
 													<a href="${path}/article/paging/search/read${pageMaker.makeSearch(pageMaker.criteria.page)}&article_no=${article.article_no}">
 															${article.title} 
 												</a> 
-												<span class="badge bg-teal"><i class="fas fa-comment"></i> + ${article.replyCnt}</span>
+												<span class="badge bg-teal"><i class="fas fa-comment-o"></i> + ${article.replyCnt}</span>
 												</td>
 												
 												<td>${article.writer}</td>
@@ -385,7 +362,12 @@
 		    alert("게시글 삭제가 완료되었습니다.");
 		}
 		
-		$("#searchBtn").on("click", function (event) {
+		$("#writeBtn").on("click", function (event) {
+			  // 글쓰기 페이지 URL
+			  self.location = "${path}/article/paging/search/write"; 
+			});
+		
+	    $("#searchBtn").on("click", function (event) {
 	        self.location =
 	            "${path}/article/paging/search/list${pageMaker.makeQuery(1)}"
 	            + "&searchType=" + $("select option:selected").val()

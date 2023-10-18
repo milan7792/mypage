@@ -32,4 +32,10 @@ public interface ArticleDAO {
 	
 	void updateViewCnt(Integer article_no) throws Exception;
 	
+	// 회원이 작성한 게시글 목록
+	List<ArticleVO> userBoardList(String userId) throws Exception;
+
+	// 회원 프로필 사진 수정
+	void updateWriterImg(ArticleVO articleVO) throws Exception;
+	
 }

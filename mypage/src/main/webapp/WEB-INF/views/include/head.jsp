@@ -11,8 +11,7 @@
   <title>AdminLTE 3 | Starter</title>
 </head>
 <body>
-  <!-- lightbox css --!>
-  <link rel="stylesheet" href="${path}/plugins/ekko-lightbox/ekko-lightbox.css">
+  <link rel="stylesheet" href="${path}/resources/plugins/ekko-lightbox/ekko-lightbox.css">
   
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="${path}/plugins/fontawesome-free/css/all.min.css">

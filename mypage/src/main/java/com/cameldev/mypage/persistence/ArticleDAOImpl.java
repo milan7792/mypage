@@ -89,11 +89,25 @@ public class ArticleDAOImpl implements ArticleDAO {
 	    paramMap.put("article_no", article_no);
 	    paramMap.put("amount", amount);
 
-	    sqlSession.update(NAMESPACE + ".updateReplyCnt",paramMap);
+	    sqlSession.update(NAMESPACE + ".updateReplyCnt", paramMap);
 	}
 	
 	@Override
 	public void updateViewCnt(Integer article_no) throws Exception {
 	    sqlSession.update(NAMESPACE + ".updateViewCnt", article_no);
 	}
+	
+	// 회원이 작성한 게시글 목록
+	@Override
+	public List<ArticleVO> userBoardList(String userId) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".userBoardList", userId);
+	}
+
+	// 회원 프로필 사진 수정
+	@Override
+	public void updateWriterImg(ArticleVO articleVO) throws Exception {
+		sqlSession.update(NAMESPACE + ".updateWriterImg", articleVO);
+	}
+	
+	
 }

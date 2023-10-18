@@ -20,5 +20,8 @@ public interface ReplyDAO {
 	int countReplies(Integer article_no) throws Exception;
 	
 	int getArticleNo(Integer reply_no) throws Exception;
+	
+	// 회원이 작성한 댓글 목록
+	List<ReplyVO> userReplies(String userId) throws Exception;
 
 }

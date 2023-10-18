@@ -49,9 +49,7 @@ public class ArticlePagingSearchController {
 
         return "redirect:/article/paging/search/list";
     }
-    
-    
-    
+   
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(@ModelAttribute("searchCriteria") SearchCriteria searchCriteria,
                        Model model) throws Exception {
@@ -70,7 +68,7 @@ public class ArticlePagingSearchController {
         return "article/search/list";
     }
     
- // 조화 페이지
+    // 조화 페이지
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public String read(@RequestParam("article_no") int article_no,
                        @ModelAttribute("searchCriteria") SearchCriteria searchCriteria,

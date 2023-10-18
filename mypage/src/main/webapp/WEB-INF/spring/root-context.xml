@@ -47,6 +47,12 @@
 			value="C:\\Users\\cameldev\\eclipse-workspace\\mypage\\src\\main\\webapp\\resources\\upload">
 		</constructor-arg>
 	</bean>
+	
+	<!--프로필 이미지 파일 저장 경로 설정-->
+	<bean id="uimagePath" class="java.lang.String">
+  		<constructor-arg value="C:\\Users\\cameldev\\eclipse-workspace\\mypage\\src\\main\\webapp\\resources\\dist\\img\\profile">
+  		</constructor-arg>
+	</bean>
 
 	<tx:annotation-driven/>
 

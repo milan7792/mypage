@@ -2,7 +2,7 @@
 <html lang="ko">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="../../include/head.jsp"%>
+<%@ include file="../include/head.jsp"%>
 
 <head>
 <meta charset="UTF-8">
@@ -13,43 +13,30 @@
 
 <!-- Font Awesome Icons -->
 <link rel="stylesheet"
-	href="/mypage/resources/plugins/fontawesome-free/css/all.min.css">
+	href="/mypage/src/main/webapp/resources/plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
 <link rel="stylesheet"
-	href="/mypage/resources/dist/css/adminlte.min.css">
+	href="/mypage/src/main/webapp/resources/dist/css/adminlte.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
 	rel="stylesheet">
-
 </head>
 
 <body class="hold-transition sidebar-mini">
 	<div class="wrapper">
 
 		<!-- Navbar -->
-		<%@ include file="../../include/main_header.jsp"%>
+		<%@ include file="../include/main_header.jsp"%>
 		<nav
 			class="main-header navbar navbar-expand navbar-white navbar-light">
-			<!-- Left navbar links -->
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
-					href="#" role="button"><i class="fas fa-bars"></i></a></li>
-				<li class="nav-item d-none d-sm-inline-block"><a
-					href="index3.html" class="nav-link">Home</a></li>
-				<li class="nav-item d-none d-sm-inline-block"><a href="#"
-					class="nav-link">Contact</a></li>
-			</ul>
+		
 
 			<!-- SEARCH FORM -->
 			<form class="form-inline ml-3">
 				<div class="input-group input-group-sm">
-					<input class="form-control form-control-navbar" type="search"
-						placeholder="Search" aria-label="Search">
 					<div class="input-group-append">
-						<button class="btn btn-navbar" type="submit">
-							<i class="fas fa-search"></i>
-						</button>
+						
 					</div>
 				</div>
 			</form>
@@ -206,7 +193,7 @@
 			</div>
 			<!-- /.sidebar -->
 		</aside>
-		<%@ include file="../../include/left_column.jsp"%>
+		<%@ include file="../include/left_column.jsp"%>
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
@@ -214,13 +201,13 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1 class="m-0 text-dark">Read Page</h1>
+							<h1 class="m-0 text-dark">Profile Page</h1>
 						</div>
 						<!-- /.col -->
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li class="breadcrumb-item"><a href="#">Home</a></li>
-								<li class="breadcrumb-item active">Read Page</li>
+								<li class="breadcrumb-item"><a href="${path}">Home</a></li>
+								<li class="breadcrumb-item active">Profile Page</li>
 							</ol>
 						</div>
 						<!-- /.col -->
@@ -232,49 +219,160 @@
 			<!-- /.content-header -->
 
 			<!-- Main content -->
-			<div class="content">
-				<div class="container-fluid">
-					<div class="col-lg-12">
-						<div class="card">
-							<div class="card-header">
-								<h3 class="card-title">글제목 : ${article.title}</h3>
-							</div>
-							<div class="card-body" style="height: 700px">
-								${article.content}</div>
-							<div class="card-footer">
-								<div class="user-block">
-									<img class="img-circle img-bordered-sm"
-										src="${path}/dist/img/loopy.jpg" alt="test image">
-									<span class="username"> <a href="#">${article.writer}</a>
-									</span> <span class="description"><fmt:formatDate
-											pattern="yyyy-MM-dd" value="${article.regDate}" /></span>
+
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-5">
+						<div class="card card-primary card-outline">
+							<div class="card-body box-profile">
+								<div class="text-center">
+									<img class="profile-user-img img-fluid img-circle"
+										src="${path}/dist/img/user-image.jpg"
+										<%-- ${path}/dist/img/profile/${login.userImg} --%>"
+										alt="User profile picture">
 								</div>
+
+								<h3 class="profile-username text-center">${login.userName}</h3>
+
+								<div class="text-center">
+									<a href="#" class="btn btn-primary btn-xs" data-toggle="modal"
+										data-target="#userPhotoModal"> <i class="fa fa-photo">
+											프로필사진 수정</i>
+									</a>
+								</div>
+								<ul class="list-group list-group-unbordered mb-5">
+									<li class="list-group-item"><b>아이디</b> <a
+										class="float-right">${login.userId}</a></li>
+									<li class="list-group-item"><b>이메일</b> <a
+										class="float-right">${login.userEmail}</a></li>
+									<li class="list-group-item"><b>가입일자</b> <a
+										class="float-right"> <fmt:formatDate
+												value="${login.userJoinDate}" pattern="yyyy-MM-dd" />
+									</a></li>
+									<li class="list-group-item"><b>최근 로그인 일자</b> <a
+										class="float-right"> <fmt:formatDate
+												value="${login.userLoginDate}" pattern="yyyy-MM-dd" />
+
+									</a></li>
+								</ul>
 							</div>
-							
-							<div class="card-footer">
-								<form role="form" method="post">
-									<input type="hidden" name="article_no"
-										value="${article.article_no}"> <input type="hidden"
-										name="page" value="${criteria.page}"> <input
-										type="hidden" name="perPageNum" value="${criteria.perPageNum}">
-								</form>
-								<button type="submit" class="btn btn-primary listBtn">
-									<i class="fa fa-list"></i> 목록
-								</button>
-								<div class="float-right">
-									<button type="submit" class="btn btn-warning modBtn">
-										<i class="fa fa-edit"></i> 수정
-									</button>
-									<button type="submit" class="btn btn-danger delBtn">
-										<i class="fa fa-trash"></i> 삭제
-									</button>
+							<div class="card-footer text-center">
+								<a href="#" class="btn btn-primary btn-xs" data-toggle="modal"
+									data-target="#userInfoModal"> <i class="fa fa-info-circle">
+										회원정보 수정</i>
+								</a> <a href="#" class="btn btn-primary btn-xs" data-toggle="modal"
+									data-target="#userPwModal"> <i
+									class="fa fa-question-circle"> 비밀번호 수정</i>
+								</a> <a href="#" class="btn btn-primary btn-xs" data-toggle="modal"
+									data-target="#userOutModal"> <i class="fa fa-user-times">
+										회원 탈퇴</i>
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-7">
+						<div class="card">
+							<div class="nav-tabs-custom">
+								<div class="card-header p-2">
+									<ul class="nav nav-pills">
+										<li class="nav-item"><a class="nav-link active"
+											href="#myPosts" data-toggle="tab"> <i
+												class="fas fa-pencil-square-o"></i> 나의 게시물
+										</a></li>
+										<li class="nav-item"><a class="nav-link"
+											href="#myReplies" data-toggle="tab"> <i
+												class="fas fa-comment-o"></i> 나의 댓글
+										</a></li>
+									</ul>
+								</div>
+								<div class="card-body">
+									<div class="tab-content">
+										<div class="active tab-pane" id="myPosts">
+											<table id="myPostsTable"
+												class="table table-bordered table-striped">
+												<thead>
+													<tr>
+														<th style="width: 10%">번호</th>
+														<th style="width: 70%">제목</th>
+														<th style="width: 20%">작성일자</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach var="articleVO" varStatus="i"
+														items="${userBoardList}">
+														<tr>
+															<td>${i.index + 1}</td>
+															<td><a
+																href="${path}/article/paging/search/read?article_no=${articleVO.article_no}">
+																	<c:choose>
+																		<c:when test="${fn:length(articleVO.title) > 30}">
+																			<c:out
+																				value="${fn:substring(articleVO.title, 0, 29)}" />....
+</c:when>
+																		<c:otherwise>
+																			<c:out value="${articleVO.title}" />
+																		</c:otherwise>
+																	</c:choose>
+															</a></td>
+															<td><fmt:formatDate pattern="yyyy-MM-dd"
+																	value="${articleVO.regDate}" /></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
+										<div class="tab-pane" id="myReplies">
+											<table id="myRepliesTable"
+												class="table table-bordered table-striped">
+												<thead>
+													<tr>
+														<th style="width: 10px">번호</th>
+														<th style="width: 250px">게시글 제목</th>
+														<th style="width: 250px">내용</th>
+														<th style="width: 150px">작성일자</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach var="userReply" varStatus="i"
+														items="${userReplies}">
+														<tr>
+															<td>${i.index + 1}</td>
+															<td><a
+																href="${path}/article/paging/search/read?article_no=${userReply.articleVO.article_no}">
+																	<c:choose>
+																		<c:when
+																			test="${fn:length(userReply.articleVO.title) > 10}">
+																			<c:out
+																				value="${fn:substring(userReply.articleVO.title, 0, 9)}" />....
+																		</c:when>
+																		<c:otherwise>
+																			<c:out value="${userReply.articleVO.title}" />
+																		</c:otherwise>
+																	</c:choose>
+															</a></td>
+															<td><c:choose>
+																	<c:when test="${fn:length(userReply.reply_text) > 10}">
+																		<c:out
+																			value="${fn:substring(userReply.reply_text, 0, 9)}" />....
+</c:when>
+																	<c:otherwise>
+																		<c:out value="${userReply.reply_text}" />
+																	</c:otherwise>
+																</c:choose></td>
+															<td><fmt:formatDate pattern="yyyy-MM-dd"
+																	value="${userReply.reg_date}" /></td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- /.row -->
 				</div>
-				<!-- /.container-fluid -->
 			</div>
 			
 			<!-- /.content -->
@@ -292,7 +390,7 @@
 		<!-- /.control-sidebar -->
 
 		<!-- Main Footer -->
-		<%@ include file="../../include/main_footer.jsp"%>
+		<%@ include file="../include/main_footer.jsp"%>
 		<footer class="main-footer">
 			<!-- To the right -->
 			<div class="float-right d-none d-sm-inline">Anything you want</div>
@@ -305,42 +403,71 @@
 	<!-- ./wrapper -->
 
 	<!-- REQUIRED SCRIPTS -->
-	<%@ include file="../../include/plugin_js.jsp"%>
+	<%@ include file="../include/plugin_js.jsp"%>
 
 	<!-- jQuery -->
 	<script
-		src="mypage/resources/plugins/jquery/jquery.min.js"></script>
+		src="${pageContext.request.contextPath}/resources/plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
 	<script
-		src="mypage/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		src="${pageContext.request.contextPath}/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
 	<script
-		src="mypage/resources/dist/js/adminlte.min.js"></script>
+		src="${pageContext.request.contextPath}/resources/dist/js/adminlte.min.js"></script>
+
+	<script src="${path}/plugins/datatables/js/jquery.dataTables.min.js"></script>
+	<script
+		src="${path}/plugin/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 
 	<script>
 		$(document).ready(function() {
 
-			var formObj = $("form[role='form']");
-			console.log(formObj);
-
-			$(".modBtn").on("click", function() {
-				formObj.attr("action", "${path}/article/paging/modify");
-				formObj.attr("method", "get");
-				formObj.submit();
+			var msg = "${msg}";
+			if (msg == "FAILURE") {
+				alert("비밀번호가 일치하지 않습니다. 비밀번호를 확인해주세요");
+			} else if (msg == "FAIL") {
+				alert("이미지가 존재하지 않습니다.");
+			} else if (msg == "SUCCESS") {
+				alert("수정되었습니다.");
+			}
+			// 회원정보 수정
+			$(".infoModBtn").on("click", function() {
+				$("#userInfoForm").submit();
 			});
-
-			$(".delBtn").on("click", function() {
-				formObj.attr("action", "${path}/article/paging/remove");
-				formObj.submit();
+			// 회원비밀번호 수정
+			$(".pwModBtn").on("click", function() {
+				$("#userPwForm").submit();
 			});
-
-			$(".listBtn").on("click", function() {
-				formObj.attr("method", "get");
-				formObj.attr("action", "${path}/article/paging/list");
-				formObj.submit();
+			// 회원 프로필 이미지 수정
+			$(".imgModBtn").on("click", function() {
+				var file = $("#file").val();
+				if (file == "") {
+					alert("파일을 선택해주세요.");
+					return;
+				}
+				$("#userImageForm").submit();
 			});
-
+			var param = {
+				"language" : {
+					"lengthMenu" : "_MENU_ 개씩 보기",
+					"zeroRecords" : "내용이 없습니다.",
+					"info" : "현재 _PAGE_ 페이지 / 전체 _PAGES_ 페이지",
+					"infoEmpty" : "내용이 없습니다.",
+					"infoFiltered" : "( _MAX_개의 전체 목록 중에서 검색된 결과)",
+					"search" : "검색:",
+					"paging" : {
+						"first" : "처음",
+						"last" : "마지막",
+						"next" : "다음",
+						"previous" : "이전"
+					}
+				}
+			};
+			$("#myPostsTable").DataTable(param);
+			$("#myRepliesTable").DataTable(param);
+			$("#myBookmarksTable").DataTable(param);
 		});
 	</script>
 </body>
+
 </html>
