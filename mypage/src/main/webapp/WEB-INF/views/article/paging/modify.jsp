@@ -82,7 +82,7 @@
 									</div>
 								</div>
 								<div class="card-footer">
-													<button type="button" class="btn btn-primary"><i class="fa fa-list"></i> 목록</button>
+													<button type="button" class="btn btn-primary" onclick="location.href='${path}/article/paging/list'"><i class="fa fa-list"></i> 목록</button>
 													<div class="float-right">
 														<button type="button" class="btn btn-warning cancelBtn"><i class="fa fa-trash"></i> 취소</button>
 														<button type="submit" class="btn btn-success modBtn"><i class="fa fa-save"></i> 저장</button>

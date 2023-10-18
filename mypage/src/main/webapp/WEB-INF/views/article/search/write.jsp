@@ -281,7 +281,7 @@
 									
 								</div>
 								<div class="card-footer">
-									<button type="button" class="btn btn-primary">
+									<button type="button" class="btn btn-primary" onclick="location.href='${path}/article/paging/search/list'">
 										<i class="fa fa-list"></i> 목록
 									</button>
 									<div class="float-right">
