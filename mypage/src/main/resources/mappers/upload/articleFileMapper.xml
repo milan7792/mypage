@@ -7,10 +7,10 @@
 	<!--게시글 첨부파일 추가-->
     <insert id="addAttach">
         INSERT tb_article_file (
-            file_name
+            fullname
             , article_no
         ) VALUES (
-            #{fileName}
+            #{fullName}
             , #{article_no}
         )
     </insert>
@@ -18,7 +18,7 @@
     <!--게시글 첨부파일 조회-->
     <select id="getAttach" resultType="string">
         SELECT
-            file_name
+            fullname
         FROM tb_article_file
         WHERE article_no = #{article_no}
         ORDER BY reg_date
@@ -27,10 +27,10 @@
     <!--게시글 첨부파일 수정-->
     <insert id="replaceAttach">
         INSERT INTO tb_article_file (
-            file_name
+            fullname
             , article_no
         ) VALUES (
-            #{fileName}
+            #{fullName}
             , #{article_no}
         )
     </insert>
@@ -38,7 +38,7 @@
     <!--게시글 첨부파일 삭제-->
     <delete id="deleteAttach">
         DELETE FROM tb_article_file
-        WHERE file_name = #{fileName}
+        WHERE fullname = #{fullName}
     </delete>
 
     <!--게시글 첨부파일 일괄 삭제-->
@@ -50,7 +50,7 @@
     <!--특정 게시글의 첨부파일 갯수 갱신-->
     <update id="updateAttachCnt">
         UPDATE tb_article
-        SET file_cnt = (SELECT COUNT(file_name) FROM tb_article_file WHERE article_no = #{article_no})
+        SET file_cnt = (SELECT COUNT(fullname) FROM tb_article_file WHERE article_no = #{article_no})
         WHERE article_no = #{article_no}
     </update>
     

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cameldev.mypage.mappers.article.ArticleMapper">
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="article_no">
+        INSERT INTO tb_article (
+            article_no
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+            , reply_cnt
+            , file_cnt
+        ) VALUES (
+            #{article_no}
+            , #{title}
+            , #{content}
+            , #{writer}
+            , #{regDate}
+            , #{viewCnt}
+            , #{replyCnt}
+            , #{fileCnt}            
+        )
+    </insert>
+
+    <select id="read" resultMap="ArticleResultMap">
+        SELECT
+            article_no
+            , title
+            , content
+            , writer
+            , regdate
+            , viewcnt
+            , reply_cnt
+            , file_cnt
+            
+        FROM
+            tb_article
+        WHERE article_no = #{article_no}
+    </select>
+
+    <update id="update">
+        UPDATE tb_article
+        SET
+            title = #{title}
+            , content = #{content}
+        WHERE
+            article_no = #{article_no}
+    </update>
+    
+    <update id="updateReplyCnt">
+    	UPDATE tb_article
+    	SET reply_cnt = reply_cnt + #{amount}
+    	WHERE article_no = #{article_no}
+	</update>
+	
+	<update id="updateViewCnt">
+    	UPDATE tb_article
+    	SET viewcnt = viewcnt + 1
+    	WHERE article_no = #{article_no}
+	</update>
+    
+
+    <delete id="delete">
+        DELETE FROM tb_article
+        WHERE article_no = #{article_no}
+    </delete>
+
+    <select id="listAll" resultType="ArticleVO">
+        <![CDATA[
+        SELECT
+            article_no,
+            title,
+            content,
+            writer,
+            regdate,
+            viewcnt,
+            reply_cnt,
+            file_cnt
+        FROM tb_article
+        WHERE article_no > 0
+        ORDER BY article_no DESC, regdate DESC
+        ]]>
+    </select>
+    
+    <select id="listPaging" resultMap="ArticleResultMap">
+    <![CDATA[
+    SELECT
+        article_no,
+        title,
+        content,
+        writer,
+        regdate,
+        viewcnt,
+        reply_cnt,
+        file_cnt
+    FROM tb_article
+    WHERE article_no > 0
+    ORDER BY article_no DESC, regdate DESC
+    LIMIT #{page}, 10
+    ]]>
+	</select>
+	
+	<select id="listCriteria" resultMap="ArticleResultMap">
+    <![CDATA[
+    SELECT
+        article_no,
+        title,
+        content,
+        writer,
+        regdate,
+        viewcnt,
+        reply_cnt,
+        file_cnt
+    FROM tb_article
+    WHERE article_no > 0
+    ORDER BY article_no DESC, regdate DESC
+    LIMIT #{pageStart}, #{perPageNum}
+    ]]>
+	</select>
+	
+	<select id="countArticles" resultType="int">
+    <![CDATA[
+    SELECT
+        COUNT(article_no)
+    FROM tb_article
+    WHERE article_no > 0
+    ]]>
+	</select>
+	
+	<select id="listSearch" resultMap="ArticleResultMap">
+    <![CDATA[
+    SELECT
+        article_no,
+        title,
+        content,
+        writer,
+        regdate,
+        viewcnt,
+        reply_cnt,
+        file_cnt
+    FROM tb_article
+    WHERE article_no > 0
+    ]]>
+      <include refid="search"/>
+    <![CDATA[
+    ORDER BY article_no DESC, regdate DESC
+    LIMIT #{pageStart}, #{perPageNum}
+    ]]>
+</select>
+
+<select id="countSearchedArticles" resultType="int">
+    <![CDATA[
+    SELECT
+        COUNT(article_no)
+    FROM tb_article
+    WHERE article_no > 0
+    ]]>
+    <include refid="search"/>
+</select>
+
+<sql id="search">
+    <if test="searchType != null">
+        <if test="searchType == 't'.toString()">
+            AND title LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="searchType == 'c'.toString()">
+            AND content LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="searchType == 'w'.toString()">
+            AND writer LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="searchType == 'tc'.toString()">
+            AND (
+                title LIKE CONCAT('%', #{keyword}, '%')
+                OR content LIKE CONCAT('%', #{keyword}, '%')
+            )
+        </if>
+        <if test="searchType == 'cw'.toString()">
+            AND (
+                content LIKE CONCAT('%', #{keyword}, '%')
+                OR writer LIKE CONCAT('%', #{keyword}, '%')
+            )
+        </if>
+        <if test="searchType == 'tcw'.toString()">
+            AND (
+                title LIKE CONCAT('%', #{keyword}, '%')
+                OR content LIKE CONCAT('%', #{keyword}, '%')
+                OR writer LIKE CONCAT('%', #{keyword}, '%')
+            )
+        </if>
+    </if>
+</sql>
+
+    <resultMap id="ArticleResultMap" type="ArticleVO">
+        <id property="article_no" column="article_no"/>
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="writer" column="writer" />
+        <result property="regDate" column="regdate" />
+        <result property="viewCnt" column="viewcnt" />
+    </resultMap>
+
+</mapper>

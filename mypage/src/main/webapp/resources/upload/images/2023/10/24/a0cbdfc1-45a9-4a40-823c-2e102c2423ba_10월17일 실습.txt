@@ -1,0 +1,26 @@
+이미 등록한 댓글이 있으므로 반영
+update tb_article
+set reply_cnt = (select count(reply_no) from tb_reply where tb_article.article_no = tb_reply.article_no);
+
+UPDATE tb_article
+    	SET reply_cnt = (select count(reply_no) FROM tb_reply
+    	WHERE tb_article.article_no = tb_reply.article_no);
+updateReplyCnt
+
+Mybatis의 SQL을 처리할 때, 2개 이상의 데이터를 전달하려면
+@Param이라는 어노테이션을 이용해 처리
+
+2) 프로필 사진 설정
+기본 프사 → left_column, main_header
+댓글 프사 → read, modify
+
+3) 글쓰기 버튼 이벤트 처리
+$("#writeBtn").on("click", function (event) {
+	self.location = "${path}/article/paging/search/write"; 
+});
+
+문제는 read.jsp였다!
+
+[미구현]
+★ 첨부파일
+(프사 수정, 회원정보 수정, 비번 수정, 회원탈퇴)

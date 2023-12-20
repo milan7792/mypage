@@ -19,7 +19,7 @@ public interface UserDAO {
     // 세션키 검증
     UserVO checkUserWithSessionKey(String value) throws Exception;
     
- // 회원정보 수정처리
+    // 회원정보 수정처리
     public void updateUser(UserVO userVO) throws Exception;
 
     // 회원 비밀번호

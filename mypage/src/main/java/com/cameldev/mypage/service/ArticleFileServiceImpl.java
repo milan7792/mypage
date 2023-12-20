@@ -34,7 +34,6 @@ public class ArticleFileServiceImpl implements ArticleFileService {
 	@Override
 	public void updateAttachCnt(Integer article_no) throws Exception {
 		 articleFileDAO.updateAttachCnt(article_no);
-		
 	}
 	
 }

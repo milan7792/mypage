@@ -22,7 +22,8 @@ public class ArticleServiceImpl implements ArticleService {
 
 	private final ArticleDAO articleDAO;
 	private final ArticleFileDAO articleFileDAO;
-	private Logger logger;
+	// 로거 객체 초기화 ★
+	private Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
 	@Inject
 	public ArticleServiceImpl(ArticleDAO articleDAO, ArticleFileDAO articleFileDAO) {
@@ -37,7 +38,6 @@ public class ArticleServiceImpl implements ArticleService {
 		String[] files = articleVO.getFiles();
 		
 		if (files == null) {
-			
 			articleDAO.create(articleVO);
 			articleDAO.updateWriterImg(articleVO); // 추가
 			return;
@@ -67,8 +67,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public void update(ArticleVO articleVO) throws Exception {
 		
 		 int article_no = articleVO.getArticle_no();
-		 
-			articleFileDAO.deleteAllAttach(article_no); 
+		 articleFileDAO.deleteAllAttach(article_no); 
 
 	        String[] files = articleVO.getFiles();
 	        if (files == null) {
@@ -77,7 +76,6 @@ public class ArticleServiceImpl implements ArticleService {
 	            return;
 	        }
 	        
-
 	        articleVO.setFileCnt(files.length);
 	        articleDAO.update(articleVO);
 	        for (String fileName : files) {
@@ -85,7 +83,6 @@ public class ArticleServiceImpl implements ArticleService {
 	        }
 	}
 	
-	// 게시글 삭제 처리
 	@Transactional
 	@Override
 	public void delete(Integer article_no) throws Exception {

@@ -53,7 +53,7 @@ public class UserDAOImpl implements UserDAO {
       return sqlSession.selectOne(NAMESPACE + ".checkUserWithSessionKey", value);
     }
     
- // 회원 비밀번호
+    // 회원 비밀번호
     @Override
     public UserVO getUser(String userId) throws Exception {
     	return sqlSession.selectOne(NAMESPACE + ".getUser", userId);

@@ -130,5 +130,4 @@ private static final Logger logger = LoggerFactory.getLogger(UserInfoController.
 
         return "user/profile";
     }
-
 }

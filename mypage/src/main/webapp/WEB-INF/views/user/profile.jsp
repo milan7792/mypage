@@ -13,14 +13,13 @@
 
 <!-- Font Awesome Icons -->
 <link rel="stylesheet"
-	href="/mypage/src/main/webapp/resources/plugins/fontawesome-free/css/all.min.css">
+	href="/mypage/resources/plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
 <link rel="stylesheet"
-	href="/mypage/src/main/webapp/resources/dist/css/adminlte.min.css">
+	href="/mypage/resources/dist/css/adminlte.min.css">
 <!-- Google Font: Source Sans Pro -->
-<link
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
-	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -407,13 +406,13 @@
 
 	<!-- jQuery -->
 	<script
-		src="${pageContext.request.contextPath}/resources/plugins/jquery/jquery.min.js"></script>
+		src="/mypage/resource/src/main/webapp/resources/plugins/jquery/jquery.min.js"></script>
 	<!-- Bootstrap 4 -->
 	<script
-		src="${pageContext.request.contextPath}/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		src="/mypage/resources/src/main/webapp/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<!-- AdminLTE App -->
 	<script
-		src="${pageContext.request.contextPath}/resources/dist/js/adminlte.min.js"></script>
+		src="/mypage/resources/src/main/webapp/resources/dist/js/adminlte.min.js"></script>
 
 	<script src="${path}/plugins/datatables/js/jquery.dataTables.min.js"></script>
 	<script

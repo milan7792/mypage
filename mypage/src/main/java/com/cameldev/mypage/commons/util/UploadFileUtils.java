@@ -3,10 +3,14 @@ package com.cameldev.mypage.commons.util;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -123,4 +127,5 @@ public class UploadFileUtils {
         // 파일 삭제(일반 파일 or 썸네일 이미지 파일 삭제)
         new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
     }
+
 }

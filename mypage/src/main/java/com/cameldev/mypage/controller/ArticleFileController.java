@@ -1,13 +1,5 @@
 package com.cameldev.mypage.controller;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,18 +7,24 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cameldev.mypage.commons.util.MediaUtils;
 import com.cameldev.mypage.commons.util.UploadFileUtils;
 import com.cameldev.mypage.service.ArticleFileService;
+
+import javax.annotation.Resource;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/file")
@@ -45,7 +43,7 @@ public class ArticleFileController {
     @Resource(name = "uploadPath")
     private String uploadPath;
 
-    // 게시글 파일 업로드
+    // 업로드 파일
     @RequestMapping(value = "/upload", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public ResponseEntity<String> uploadFile(MultipartFile file) throws Exception {
         logger.info("========================================= FILE UPLOAD =========================================");
@@ -53,6 +51,7 @@ public class ArticleFileController {
         logger.info("FILE SIZE : " + file.getSize());
         logger.info("CONTENT TYPE : " + file.getContentType());
         logger.info("===============================================================================================");
+        String uploadPath = "C:/Users/delta/git/mypage/mypage/src/main/webapp/resources/upload/images";
         return new ResponseEntity<String>(UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()), HttpStatus.CREATED);
     }
     
@@ -72,10 +71,11 @@ public class ArticleFileController {
     // 업로드 파일 보여주기
     @RequestMapping(value = "/display")
     public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
-        // InputStream : 바이트 단위로 데이터를 읽는다. 외부로부터 읽어 들이는 기능관련 클래스
+        // InputStream : 바이트 단위로 데이터를 읽는다. 외부로부터 읽어 들이는 기능 관련 클래스
         InputStream inputStream = null;
         ResponseEntity<byte[]> entity = null;
         logger.info("file name : " + fileName);
+        String uploadPath = "C:/Users/delta/git/mypage/mypage/src/main/webapp/resources/upload/images";
         try {
             // 파일 확장자 추출
             String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
@@ -111,17 +111,16 @@ public class ArticleFileController {
     // 단일 파일 데이터 삭제1 : 게시글 작성화면
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public ResponseEntity<String> RemoveFile(String fileName) throws Exception {
+    public ResponseEntity<String> boardWriteRemoveFile(String fileName) throws Exception {
         // 파일 삭제
         UploadFileUtils.removeFile(uploadPath, fileName);
         return new ResponseEntity<String>("DELETED", HttpStatus.OK);
     }
 	
     // 단일 파일 데이터 삭제2 : 게시글 수정화면
-    
     @ResponseBody
     @RequestMapping(value = "/delete/{article_no}", method = RequestMethod.POST)
-    public ResponseEntity<String> RemoveFile(@PathVariable("article_no") Integer article_no, String fileName, HttpServletRequest request) throws Exception {
+    public ResponseEntity<String> boardModifyRemoveFile(@PathVariable("article_no") Integer article_no, String fileName, HttpServletRequest request) throws Exception {
         // DB에서 파일명 제거
     	articleFileService.deleteAttach(fileName);
         // 첨부파일 갯수 갱신
@@ -134,21 +133,21 @@ public class ArticleFileController {
 
     // 전체 파일 삭제 : 게시글 삭제 처리시
     @ResponseBody
-    @RequestMapping(value = "/delete/all", method = RequestMethod.POST)
-    public ResponseEntity<String> RemoveAllFiles(@RequestParam("files[]") String[] files, HttpServletRequest request) {
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.POST)
+    public ResponseEntity<String> removeAllFiles(@RequestParam("files[]") String[] files) {
         // 파일이 없을 경우 메서드 종료
         if (files == null || files.length == 0) {
             return new ResponseEntity<String>("DELETED", HttpStatus.OK);
-        }
+    	}        
         // 파일이 존재할 경우 반복문 수행
         for (String fileName : files) {
             // 파일 삭제
             UploadFileUtils.removeFile(uploadPath, fileName);
-        }
+        } 
         return new ResponseEntity<String>("DELETED", HttpStatus.OK);
-    }
-    
-
+        }
+        
+        
 }
 	
 
